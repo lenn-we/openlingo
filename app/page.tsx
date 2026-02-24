@@ -1,20 +1,7 @@
 import Link from "next/link";
 import { getSession } from "@/lib/auth-server";
 import { DEFAULT_PATH } from "@/lib/constants";
-
-async function getGitHubStars(): Promise<number | null> {
-  try {
-    const res = await fetch(
-      "https://api.github.com/repos/pretzelai/openlingo",
-      { next: { revalidate: 3600 } },
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.stargazers_count ?? null;
-  } catch {
-    return null;
-  }
-}
+import { getGitHubStars } from "@/lib/github";
 
 export default async function LandingPage() {
   const [session, stars] = await Promise.all([getSession(), getGitHubStars()]);
