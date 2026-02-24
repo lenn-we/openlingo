@@ -7,6 +7,7 @@ import {
   getBrowsableUnits,
 } from "@/lib/db/queries/courses";
 import { getNativeLanguage } from "@/lib/actions/profile";
+import { getTargetLanguage } from "@/lib/actions/preferences";
 import { CourseBrowser } from "../course-browser";
 import { BrowseUnits } from "../browse-units";
 
@@ -15,6 +16,7 @@ export default async function BrowsePage() {
   const userId = session?.user?.id;
 
   const nativeLanguage = userId ? await getNativeLanguage(userId) : null;
+  const targetLanguage = userId ? await getTargetLanguage(userId) : null;
 
   const [courses, filters, browsableUnits] = await Promise.all([
     listCoursesWithLessonCounts(
@@ -37,7 +39,7 @@ export default async function BrowsePage() {
         <h1 className="text-2xl font-black text-lingo-text">Browse</h1>
       </div>
 
-      <BrowseUnits units={browsableUnits} />
+      <BrowseUnits units={browsableUnits} initialTargetLanguage={targetLanguage} />
 
       {courses.length === 0 ? (
         <div className="text-center py-12">
@@ -57,6 +59,7 @@ export default async function BrowsePage() {
           courses={courses}
           filters={filters}
           initialSourceLanguage={nativeLanguage}
+          initialTargetLanguage={targetLanguage}
         />
       )}
     </div>

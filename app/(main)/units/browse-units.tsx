@@ -10,10 +10,11 @@ import { addUnitToLibrary } from "@/lib/actions/library";
 
 interface BrowseUnitsProps {
   units: StandaloneUnitInfo[];
+  initialTargetLanguage?: string | null;
 }
 
-export function BrowseUnits({ units }: BrowseUnitsProps) {
-  const [targetLanguage, setTargetLanguage] = useState("");
+export function BrowseUnits({ units, initialTargetLanguage }: BrowseUnitsProps) {
+  const [targetLanguage, setTargetLanguage] = useState(initialTargetLanguage ?? "");
   const [level, setLevel] = useState("");
 
   if (units.length === 0) return null;

@@ -13,11 +13,12 @@ interface CourseBrowserProps {
     levels: string[];
   };
   initialSourceLanguage?: string | null;
+  initialTargetLanguage?: string | null;
 }
 
-export function CourseBrowser({ courses, filters, initialSourceLanguage }: CourseBrowserProps) {
+export function CourseBrowser({ courses, filters, initialSourceLanguage, initialTargetLanguage }: CourseBrowserProps) {
   const [sourceLanguage, setSourceLanguage] = useState(initialSourceLanguage ?? "");
-  const [targetLanguage, setTargetLanguage] = useState("");
+  const [targetLanguage, setTargetLanguage] = useState(initialTargetLanguage ?? "");
   const [level, setLevel] = useState("");
 
   const filtered = courses.filter((c) => {
