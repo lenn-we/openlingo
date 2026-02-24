@@ -25,6 +25,9 @@ import type {
   EnrolledCourseInfo,
   StandaloneUnitInfo,
   UnitWithContent,
+  OwnedCourseInfo,
+  CourseManagementInfo,
+  AvailableUnitForCourse,
 } from "@/lib/content/types";
 import { getUnitLessons, getUnitLessonsSafe } from "@/lib/content/loader";
 
@@ -462,24 +465,43 @@ export async function getBrowsableUnits(
 
 export async function getUnitForEdit(
   unitId: string,
-  userId: string
-): Promise<{ id: string; title: string; markdown: string } | null> {
+  userId: string,
+  isAdmin: boolean = false
+): Promise<{ id: string; title: string; markdown: string; visibility: string | null } | null> {
   const [u] = await db
     .select({
       id: unit.id,
       title: unit.title,
       markdown: unit.markdown,
       createdBy: unit.createdBy,
+      visibility: unit.visibility,
     })
     .from(unit)
     .where(eq(unit.id, unitId));
 
-  if (!u || u.createdBy !== userId) return null;
+  if (!u) return null;
+
+  // Admin can edit anything
+  if (isAdmin) {
+    return {
+      id: u.id,
+      title: u.title,
+      markdown: u.markdown,
+      visibility: u.visibility,
+    };
+  }
+
+  // Non-owner cannot edit
+  if (u.createdBy !== userId) return null;
+
+  // Public units cannot be edited by non-admins
+  if (u.visibility === "public") return null;
 
   return {
     id: u.id,
     title: u.title,
     markdown: u.markdown,
+    visibility: u.visibility,
   };
 }
 
@@ -503,4 +525,116 @@ export async function getUnitWithContent(
     lessons,
     parseError,
   };
+}
+
+// ─── Course management queries ───
+
+export async function getUserOwnedCourses(
+  userId: string
+): Promise<OwnedCourseInfo[]> {
+  const rows = await db
+    .select({
+      id: course.id,
+      title: course.title,
+      sourceLanguage: course.sourceLanguage,
+      targetLanguage: course.targetLanguage,
+      level: course.level,
+      visibility: course.visibility,
+      createdAt: course.createdAt,
+      unitCount: countDistinct(unit.id),
+    })
+    .from(course)
+    .leftJoin(unit, eq(unit.courseId, course.id))
+    .where(eq(course.createdBy, userId))
+    .groupBy(course.id)
+    .orderBy(course.createdAt);
+
+  return rows.map((r) => ({
+    ...r,
+    unitCount: Number(r.unitCount),
+  }));
+}
+
+export async function getCourseForManagement(
+  courseId: string,
+  userId: string,
+  isAdmin: boolean
+): Promise<CourseManagementInfo | null> {
+  const [courseRow] = await db
+    .select({
+      id: course.id,
+      title: course.title,
+      sourceLanguage: course.sourceLanguage,
+      targetLanguage: course.targetLanguage,
+      level: course.level,
+      visibility: course.visibility,
+      createdBy: course.createdBy,
+    })
+    .from(course)
+    .where(eq(course.id, courseId));
+
+  if (!courseRow) return null;
+
+  // Only owner or admin can manage
+  if (courseRow.createdBy !== userId && !isAdmin) return null;
+
+  const units = await db
+    .select({
+      id: unit.id,
+      title: unit.title,
+      icon: unit.icon,
+      visibility: unit.visibility,
+      markdown: unit.markdown,
+    })
+    .from(unit)
+    .where(eq(unit.courseId, courseId));
+
+  return {
+    id: courseRow.id,
+    title: courseRow.title,
+    sourceLanguage: courseRow.sourceLanguage,
+    targetLanguage: courseRow.targetLanguage,
+    level: courseRow.level,
+    visibility: courseRow.visibility,
+    createdBy: courseRow.createdBy,
+    units: units.map((u) => {
+      const { lessons } = getUnitLessonsSafe(u.markdown);
+      return {
+        id: u.id,
+        title: u.title,
+        icon: u.icon,
+        visibility: u.visibility,
+        lessonCount: lessons.length,
+      };
+    }),
+  };
+}
+
+/** Units owned by user that are NOT assigned to any course (available to add). */
+export async function getUserOwnedStandaloneUnits(
+  userId: string
+): Promise<AvailableUnitForCourse[]> {
+  const rows = await db
+    .select({
+      id: unit.id,
+      title: unit.title,
+      icon: unit.icon,
+      targetLanguage: unit.targetLanguage,
+      level: unit.level,
+      markdown: unit.markdown,
+    })
+    .from(unit)
+    .where(and(eq(unit.createdBy, userId), isNull(unit.courseId)));
+
+  return rows.map((u) => {
+    const { lessons } = getUnitLessonsSafe(u.markdown);
+    return {
+      id: u.id,
+      title: u.title,
+      icon: u.icon,
+      targetLanguage: u.targetLanguage,
+      level: u.level,
+      lessonCount: lessons.length,
+    };
+  });
 }

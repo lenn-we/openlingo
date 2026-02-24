@@ -194,3 +194,40 @@ export interface UnitWithContent {
   lessons: UnitLesson[];
   parseError?: boolean;
 }
+
+export interface OwnedCourseInfo {
+  id: string;
+  title: string;
+  sourceLanguage: string;
+  targetLanguage: string;
+  level: string;
+  visibility: string | null;
+  unitCount: number;
+  createdAt: Date;
+}
+
+export interface CourseManagementInfo {
+  id: string;
+  title: string;
+  sourceLanguage: string;
+  targetLanguage: string;
+  level: string;
+  visibility: string | null;
+  createdBy: string | null;
+  units: {
+    id: string;
+    title: string;
+    icon: string;
+    visibility: string | null;
+    lessonCount: number;
+  }[];
+}
+
+export interface AvailableUnitForCourse {
+  id: string;
+  title: string;
+  icon: string;
+  targetLanguage: string;
+  level: string | null;
+  lessonCount: number;
+}

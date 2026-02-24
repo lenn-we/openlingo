@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { getUnitForEdit } from "@/lib/db/queries/courses";
+import { isAdminEmail } from "@/lib/ai/models";
 import { UnitEditor } from "./unit-editor";
 
 interface EditUnitPageProps {
@@ -16,7 +17,8 @@ export default async function EditUnitPage({ params }: EditUnitPageProps) {
     redirect("/sign-in");
   }
 
-  const unitData = await getUnitForEdit(unitId, session.user.id);
+  const isAdmin = isAdminEmail(session.user.email);
+  const unitData = await getUnitForEdit(unitId, session.user.id, isAdmin);
 
   if (!unitData) {
     redirect("/units");
@@ -28,6 +30,8 @@ export default async function EditUnitPage({ params }: EditUnitPageProps) {
         unitId={unitData.id}
         title={unitData.title}
         initialMarkdown={unitData.markdown}
+        isPublic={unitData.visibility === "public"}
+        isAdmin={isAdmin}
       />
     </div>
   );

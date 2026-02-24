@@ -10,9 +10,11 @@ interface UnitEditorProps {
   unitId: string;
   title: string;
   initialMarkdown: string;
+  isPublic?: boolean;
+  isAdmin?: boolean;
 }
 
-export function UnitEditor({ unitId, title, initialMarkdown }: UnitEditorProps) {
+export function UnitEditor({ unitId, title, initialMarkdown, isPublic, isAdmin }: UnitEditorProps) {
   const router = useRouter();
   const [markdown, setMarkdown] = useState(initialMarkdown);
   const [error, setError] = useState<string | null>(null);
@@ -57,13 +59,22 @@ export function UnitEditor({ unitId, title, initialMarkdown }: UnitEditorProps) 
             href="/units"
             className="shrink-0 text-sm font-bold text-lingo-text-light hover:text-lingo-text transition-colors"
           >
-            ← Back
+            &larr; Back
           </Link>
           <h1 className="text-lg font-bold text-lingo-text truncate">
             Edit: {title}
           </h1>
         </div>
       </div>
+
+      {/* Admin notice for public units */}
+      {isPublic && isAdmin && (
+        <div className="rounded-xl border-2 border-amber-200 bg-amber-50 px-4 py-2">
+          <p className="text-sm font-medium text-amber-700">
+            Admin edit mode — this unit is public. Changes will be visible to all users.
+          </p>
+        </div>
+      )}
 
       {/* Error display */}
       {error && (

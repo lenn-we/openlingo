@@ -2,18 +2,14 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import {
-  listCoursesWithLessonCounts,
-  getAvailableFilters,
   getUserEnrolledCourses,
   getStandaloneUnits,
-  getBrowsableUnits,
+  getUserOwnedCourses,
 } from "@/lib/db/queries/courses";
-import { getNativeLanguage } from "@/lib/actions/profile";
 import { isAdminEmail } from "@/lib/ai/models";
 import { ContinueLearning } from "./continue-learning";
 import { StandaloneUnits } from "./standalone-units";
-import { CourseBrowser } from "./course-browser";
-import { BrowseUnits } from "./browse-units";
+import { MyCourses } from "./my-courses";
 
 const NEW_UNIT_PROMPT = "I want to create a new personalised unit";
 
@@ -23,28 +19,11 @@ export default async function LearnPage() {
   const userId = session?.user?.id;
   const isAdmin = isAdminEmail(session?.user?.email);
 
-  const nativeLanguage = userId ? await getNativeLanguage(userId) : null;
-
-  const [courses, filters, enrolled, standaloneUnits, browsableUnits] = await Promise.all([
-    listCoursesWithLessonCounts(
-      nativeLanguage ? { sourceLanguage: nativeLanguage } : undefined,
-      userId,
-    ),
-    getAvailableFilters(userId),
+  const [enrolled, standaloneUnits, ownedCourses] = await Promise.all([
     userId ? getUserEnrolledCourses(userId) : Promise.resolve([]),
     userId ? getStandaloneUnits(userId) : Promise.resolve([]),
-    userId ? getBrowsableUnits(userId) : Promise.resolve([]),
+    userId ? getUserOwnedCourses(userId) : Promise.resolve([]),
   ]);
-
-  if (courses.length === 0 && !nativeLanguage && standaloneUnits.length === 0 && browsableUnits.length === 0) {
-    return (
-      <div className="mx-auto max-w-2xl text-center py-20">
-        <p className="text-lg text-lingo-text-light">
-          No courses available yet.
-        </p>
-      </div>
-    );
-  }
 
   return (
     <div className="mx-auto w-full max-w-2xl">
@@ -58,26 +37,16 @@ export default async function LearnPage() {
         >
           + New Unit
         </Link>
+        <Link
+          href="/units/browse"
+          className="rounded-xl border-2 border-lingo-border bg-white px-4 py-2.5 text-sm font-bold text-lingo-text shadow-[0_2px_0_0] shadow-lingo-border transition-all hover:border-lingo-blue hover:bg-lingo-blue/5 active:translate-y-[1px] active:shadow-none"
+        >
+          Browse
+        </Link>
       </div>
       <ContinueLearning courses={enrolled} />
       <StandaloneUnits units={standaloneUnits} isAdmin={isAdmin} />
-      <BrowseUnits units={browsableUnits} />
-      {courses.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-lg text-lingo-text-light mb-2">
-            No courses available for your language yet.
-          </p>
-          <p className="text-sm text-lingo-text-light">
-            Change your native language in{" "}
-            <a href="/settings" className="font-bold text-lingo-blue underline">
-              settings
-            </a>{" "}
-            to see more courses.
-          </p>
-        </div>
-      ) : (
-        <CourseBrowser courses={courses} filters={filters} />
-      )}
+      <MyCourses courses={ownedCourses} isAdmin={isAdmin} />
     </div>
   );
 }

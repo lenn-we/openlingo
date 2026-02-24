@@ -53,11 +53,14 @@ function StandaloneUnitCard({
   const isPublic = unit.visibility === "public";
   const hasParseError = unit.parseError === true;
 
+  const isEditLocked = isPublic && !isAdmin;
+
   function handleMakePublic() {
     const confirmed = window.confirm(
       "Are you sure you want to make this unit public?\n\n" +
-        "This decision is irreversible. All users will have access to this unit " +
-        "and your name will be shown as the author."
+        "Once public, this unit cannot be edited anymore. " +
+        "Only admins can make changes to public content. " +
+        "All users will have access to this unit and your name will be shown as the author."
     );
     if (!confirmed) return;
 
@@ -194,25 +197,28 @@ function StandaloneUnitCard({
         <div className="border-t border-lingo-border px-4 py-2 flex flex-wrap items-center gap-2">
           {unit.isOwner && (
             <>
-              <Link
-                href={`/units/edit/${unit.id}`}
-                className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold text-lingo-blue hover:bg-lingo-blue/10 transition-colors"
-              >
-                <svg
-                  className="h-3.5 w-3.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
+              {/* Edit Markdown: shown if private, or if admin (even if public) */}
+              {(!isPublic || isAdmin) && (
+                <Link
+                  href={`/units/edit/${unit.id}`}
+                  className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold text-lingo-blue hover:bg-lingo-blue/10 transition-colors"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                  />
-                </svg>
-                Edit Markdown
-              </Link>
+                  <svg
+                    className="h-3.5 w-3.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                    />
+                  </svg>
+                  Edit Markdown
+                </Link>
+              )}
               {!isPublic && (
                 <button
                   onClick={handleMakePublic}
@@ -234,6 +240,12 @@ function StandaloneUnitCard({
                   </svg>
                   Make Public
                 </button>
+              )}
+              {/* Owner of public unit, not admin: show read-only indicator */}
+              {isEditLocked && (
+                <span className="text-xs text-lingo-text-light italic">
+                  Public — read-only
+                </span>
               )}
             </>
           )}
