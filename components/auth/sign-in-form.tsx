@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Turnstile, type TurnstileRef } from "@/components/auth/turnstile";
 import Image from "next/image";
 import Link from "next/link";
 import { DEFAULT_PATH } from "@/lib/constants";
@@ -20,19 +21,38 @@ export function SignInForm({ redirectUrl }: SignInFormProps) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileRef>(null);
 
   const destination = redirectUrl || DEFAULT_PATH;
+
+  const handleTurnstileVerify = useCallback((token: string) => {
+    setTurnstileToken(token);
+  }, []);
+
+  const handleTurnstileExpire = useCallback(() => {
+    setTurnstileToken(null);
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     setLoading(true);
 
-    const result = await signIn.email({ email, password });
+    const result = await signIn.email(
+      { email, password },
+      {
+        headers: turnstileToken
+          ? { "x-turnstile-token": turnstileToken }
+          : undefined,
+      }
+    );
     setLoading(false);
 
     if (result.error) {
       setError(result.error.message || "Sign in failed");
+      setTurnstileToken(null);
+      turnstileRef.current?.reset();
     } else {
       router.push(destination);
     }
@@ -66,10 +86,21 @@ export function SignInForm({ redirectUrl }: SignInFormProps) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        <Turnstile
+          ref={turnstileRef}
+          onVerify={handleTurnstileVerify}
+          onExpire={handleTurnstileExpire}
+          onError={handleTurnstileExpire}
+        />
         {error && (
           <p className="text-sm text-lingo-red font-medium">{error}</p>
         )}
-        <Button type="submit" loading={loading} className="w-full">
+        <Button
+          type="submit"
+          loading={loading}
+          disabled={turnstileToken === null && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+          className="w-full"
+        >
           Sign In
         </Button>
       </form>

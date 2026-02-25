@@ -4,6 +4,7 @@ import { db } from "./db";
 import * as schema from "./db/schema";
 import { userStats, userPreferences } from "./db/schema";
 import { DEFAULT_NATIVE_LANGUAGE } from "./constants";
+import { turnstilePlugin } from "./turnstile-plugin";
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_BASE_URL,
@@ -11,6 +12,7 @@ export const auth = betterAuth({
     provider: "pg",
     schema,
   }),
+  plugins: [turnstilePlugin()],
   emailAndPassword: {
     enabled: true,
   },
