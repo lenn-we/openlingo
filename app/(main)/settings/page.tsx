@@ -4,6 +4,7 @@ import { getNativeLanguage } from "@/lib/actions/profile";
 import { requireSession } from "@/lib/auth-server";
 import { SettingsView } from "./settings-view";
 
+export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
   const session = await requireSession();

@@ -51,7 +51,7 @@ export function SettingsView({
             }}
             className="rounded-lg border-2 border-lingo-border bg-lingo-card px-3 py-1.5 text-sm font-bold text-lingo-text disabled:opacity-50"
           >
-            {!targetLanguage && <option value="">Select a language</option>}
+            <option value="">Select a language</option>
             {TARGET_LANGUAGES.map((code) => (
               <option key={code} value={code}>
                 {getLanguageName(code)}

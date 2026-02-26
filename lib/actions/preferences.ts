@@ -38,6 +38,7 @@ export async function updateTargetLanguage(language: string) {
     });
 
   revalidatePath("/");
+  revalidatePath("/settings");
 }
 
 export async function getPreferredModel(userId?: string): Promise<string> {

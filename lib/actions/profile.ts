@@ -52,6 +52,7 @@ export async function updateNativeLanguage(language: string) {
 
   revalidatePath(DEFAULT_PATH);
   revalidatePath("/prompts");
+  revalidatePath("/settings");
 }
 
 export async function getNativeLanguage(userId: string): Promise<string | null> {
