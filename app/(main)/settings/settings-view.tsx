@@ -14,7 +14,7 @@ const NATIVE_LANGUAGES = [
   "en", "es", "fr", "de", "pt", "it", "nl", "ru", "zh", "ja", "ko", "ar",
   "hi", "tr", "pl", "sv", "da", "no", "fi", "cs", "ro", "hu", "el", "he",
   "th", "vi", "id", "ms", "uk", "bg",
-];
+]
 
 export function SettingsView({
   prompts,
@@ -51,7 +51,7 @@ export function SettingsView({
             }}
             className="rounded-lg border-2 border-lingo-border bg-lingo-card px-3 py-1.5 text-sm font-bold text-lingo-text disabled:opacity-50"
           >
-            <option value="">Select a language</option>
+            <option value="" disabled>Select a language</option>
             {TARGET_LANGUAGES.map((code) => (
               <option key={code} value={code}>
                 {getLanguageName(code)}
@@ -71,7 +71,7 @@ export function SettingsView({
             }}
             className="rounded-lg border-2 border-lingo-border bg-lingo-card px-3 py-1.5 text-sm font-bold text-lingo-text disabled:opacity-50"
           >
-            <option value="">Select language</option>
+            <option value="" disabled>Select language</option>
             {NATIVE_LANGUAGES.map((code) => (
               <option key={code} value={code}>
                 {getLanguageName(code)}
