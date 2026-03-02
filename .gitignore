@@ -40,5 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# leftover from CI/CD
+# remove from CI/CD
 package-lock.json
