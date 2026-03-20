@@ -14,6 +14,9 @@ export const auth = betterAuth({
     schema,
   }),
   plugins: [turnstilePlugin()],
+  advanced: {
+    cookiePrefix: "openlingo",
+  },
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url }) => {
