@@ -72,7 +72,7 @@ export function LearningPath({
                     <div className="flex items-center gap-2">
                       <h3 className="text-lg font-bold text-lingo-text">{unit.title}</h3>
                       <span className="shrink-0 rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-red-600">
-                        Can&apos;t be parsed
+                        Fehlerhaft
                       </span>
                     </div>
                     <p className="text-sm text-lingo-text-light">{unit.description}</p>
@@ -118,15 +118,15 @@ export function LearningPath({
           onClick={() => setSelectedUnitId(null)}
           className="mb-4 flex items-center gap-1 text-sm font-bold text-lingo-text-light hover:text-lingo-text transition-colors"
         >
-          &larr; All paths
+          &larr; Alle Pfade
         </button>
         <div className="rounded-2xl border-2 border-red-200 bg-red-50 p-6 text-center">
           <div className="mb-3 text-3xl">&#9888;&#65039;</div>
           <h2 className="text-lg font-bold text-red-700 mb-2">
-            Unit can&apos;t be parsed
+            Lektion kann nicht geladen werden
           </h2>
           <p className="text-sm text-red-600">
-            This unit&apos;s markdown contains errors and its lessons cannot be loaded.
+            Das Markdown dieser Lektion enthält Fehler und die Lektionen können nicht geladen werden.
           </p>
         </div>
       </div>
@@ -145,7 +145,7 @@ export function LearningPath({
         onClick={() => setSelectedUnitId(null)}
         className="mb-4 flex items-center gap-1 text-sm font-bold text-lingo-text-light hover:text-lingo-text transition-colors"
       >
-        ← All paths
+          ← Alle Pfade
       </button>
 
       <UnitCard

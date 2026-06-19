@@ -37,7 +37,7 @@ export function BrowseUnits({ units, initialTargetLanguage }: BrowseUnitsProps) 
   return (
     <section className="mb-8">
       <h2 className="mb-3 text-lg font-bold text-lingo-text">
-        Browse Public Units
+        Öffentliche Lektionen
       </h2>
 
       {hasFilters && (
@@ -48,7 +48,7 @@ export function BrowseUnits({ units, initialTargetLanguage }: BrowseUnitsProps) 
               onChange={(e) => setTargetLanguage(e.target.value)}
               className="max-w-full min-w-0 rounded-lg border-2 border-lingo-border bg-lingo-card px-3 py-2 text-sm font-bold text-lingo-text"
             >
-              <option value="">All languages</option>
+              <option value="">Alle Sprachen</option>
               {targetLanguages.map((lang) => (
                 <option key={lang} value={lang}>
                   {getLanguageName(lang)}
@@ -62,7 +62,7 @@ export function BrowseUnits({ units, initialTargetLanguage }: BrowseUnitsProps) 
               onChange={(e) => setLevel(e.target.value)}
               className="max-w-full min-w-0 rounded-lg border-2 border-lingo-border bg-lingo-card px-3 py-2 text-sm font-bold text-lingo-text"
             >
-              <option value="">All levels</option>
+              <option value="">Alle Niveaus</option>
               {levels.map((l) => (
                 <option key={l} value={l!}>
                   {l}
@@ -75,7 +75,7 @@ export function BrowseUnits({ units, initialTargetLanguage }: BrowseUnitsProps) 
 
       {filtered.length === 0 ? (
         <p className="py-4 text-center text-sm text-lingo-text-light">
-          No units match your filters.
+          Keine Lektionen entsprechen deinen Filtern.
         </p>
       ) : (
         <div className="grid min-w-0 gap-3">
@@ -141,7 +141,7 @@ function BrowseUnitCard({
               disabled={isPending}
               className="rounded-xl border-2 border-lingo-blue bg-lingo-blue px-3 py-1.5 text-xs font-bold text-white transition-all hover:bg-lingo-blue/90 active:translate-y-[1px] disabled:opacity-50"
             >
-              {isPending ? "Adding..." : "+ Add"}
+              {isPending ? "Wird hinzugefügt..." : "+ Hinzufügen"}
             </button>
           </div>
         )}
@@ -172,7 +172,7 @@ function UnitCardContent({
           <p className="font-bold text-lingo-text truncate">{unit.title}</p>
           {hasParseError && (
             <span className="shrink-0 rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-red-600">
-              Can&apos;t be parsed
+              Fehlerhaft
             </span>
           )}
         </div>
@@ -192,14 +192,14 @@ function UnitCardContent({
               <span>·</span>
               <span>
                 {unit.lessonCount}{" "}
-                {unit.lessonCount === 1 ? "lesson" : "lessons"}
+                {unit.lessonCount === 1 ? "Lektion" : "Lektionen"}
               </span>
             </>
           )}
           {unit.creatorName && (
             <>
               <span>·</span>
-              <span className="truncate">by {unit.creatorName}</span>
+              <span className="truncate">von {unit.creatorName}</span>
             </>
           )}
         </div>

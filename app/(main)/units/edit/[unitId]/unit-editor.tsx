@@ -36,7 +36,7 @@ export function UnitEditor({ unitId, title, initialMarkdown, isPublic, isAdmin }
   }
 
   function handleDelete() {
-    if (!window.confirm("Are you sure you want to delete this unit? This cannot be undone.")) {
+    if (!window.confirm("Bist du sicher, dass du diese Lektion löschen möchtest? Dies kann nicht rückgängig gemacht werden.")) {
       return;
     }
     setError(null);
@@ -59,10 +59,10 @@ export function UnitEditor({ unitId, title, initialMarkdown, isPublic, isAdmin }
             href="/units"
             className="shrink-0 text-sm font-bold text-lingo-text-light hover:text-lingo-text transition-colors"
           >
-            &larr; Back
+            &larr; Zurück
           </Link>
           <h1 className="text-lg font-bold text-lingo-text truncate">
-            Edit: {title}
+            Bearbeiten: {title}
           </h1>
         </div>
       </div>
@@ -71,7 +71,7 @@ export function UnitEditor({ unitId, title, initialMarkdown, isPublic, isAdmin }
       {isPublic && isAdmin && (
         <div className="rounded-xl border-2 border-amber-200 bg-amber-50 px-4 py-2">
           <p className="text-sm font-medium text-amber-700">
-            Admin edit mode — this unit is public. Changes will be visible to all users.
+            Admin-Bearbeitungsmodus — diese Lektion ist öffentlich. Änderungen sind für alle Nutzer sichtbar.
           </p>
         </div>
       )}
@@ -100,11 +100,11 @@ export function UnitEditor({ unitId, title, initialMarkdown, isPublic, isAdmin }
             loading={isSaving}
             disabled={!hasChanges || isDeleting}
           >
-            Save
+            Speichern
           </Button>
           <Link href="/units">
             <Button variant="outline" disabled={isSaving || isDeleting}>
-              Cancel
+              Abbrechen
             </Button>
           </Link>
         </div>
@@ -115,7 +115,7 @@ export function UnitEditor({ unitId, title, initialMarkdown, isPublic, isAdmin }
           loading={isDeleting}
           disabled={isSaving}
         >
-          Delete Unit
+          Lektion löschen
         </Button>
       </div>
     </div>

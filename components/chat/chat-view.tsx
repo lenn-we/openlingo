@@ -370,18 +370,18 @@ const LANG_FLAGS: Record<string, string> = {
 };
 
 const LANG_NAMES: Record<string, string> = {
-  de: "German",
-  fr: "French",
-  es: "Spanish",
-  it: "Italian",
-  pt: "Portuguese",
-  ru: "Russian",
-  ar: "Arabic",
+  de: "Deutsch",
+  fr: "Französisch",
+  es: "Spanisch",
+  it: "Italienisch",
+  pt: "Portugiesisch",
+  ru: "Russisch",
+  ar: "Arabisch",
   hi: "Hindi",
-  ko: "Korean",
+  ko: "Koreanisch",
   zh: "Mandarin",
-  ja: "Japanese",
-  en: "English",
+  ja: "Japanisch",
+  en: "Englisch",
 };
 
 function Greeting({

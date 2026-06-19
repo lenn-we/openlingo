@@ -19,7 +19,7 @@ export async function GET(
   const languageName = getLanguageName(unit.targetLanguage);
   const details = [
     lessonCount > 0
-      ? `${lessonCount} ${lessonCount === 1 ? "lesson" : "lessons"}`
+      ? `${lessonCount} ${lessonCount === 1 ? "Lektion" : "Lektionen"}`
       : null,
     languageName,
     unit.level,

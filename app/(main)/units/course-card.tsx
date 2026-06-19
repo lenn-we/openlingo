@@ -22,8 +22,8 @@ export function CourseCard({ course }: CourseCardProps) {
           {course.level}
         </span>
         <span className="text-xs text-lingo-text-light">
-          {course.unitCount} {course.unitCount === 1 ? "unit" : "units"} · {course.lessonCount}{" "}
-          {course.lessonCount === 1 ? "lesson" : "lessons"}
+          {course.unitCount} {course.unitCount === 1 ? "Lektion" : "Lektionen"} · {course.lessonCount}{" "}
+          {course.lessonCount === 1 ? "Lektion" : "Lektionen"}
         </span>
       </div>
     </Link>

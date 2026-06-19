@@ -37,7 +37,7 @@ export function SearchResultsCard({ query, results }: SearchResultsCardProps) {
             {query}
           </h3>
           <p className="text-[11px] text-lingo-text-light">
-            {results.length} result{results.length !== 1 ? "s" : ""} found
+            {results.length} Ergebnis{results.length !== 1 ? "se" : ""} gefunden
           </p>
         </div>
       </div>
@@ -57,7 +57,7 @@ export function SearchResultsCard({ query, results }: SearchResultsCardProps) {
             ? (() => {
                 try {
                   return new Date(result.publishedDate).toLocaleDateString(
-                    "en-US",
+                    "de-DE",
                     { month: "short", day: "numeric", year: "numeric" },
                   );
                 } catch {

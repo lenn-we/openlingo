@@ -29,15 +29,15 @@ export function CreateCourseForm({ onClose }: { onClose: () => void }) {
     setError(null);
 
     if (!title.trim()) {
-      setError("Title is required");
+      setError("Titel ist erforderlich");
       return;
     }
     if (!targetLanguage) {
-      setError("Target language is required");
+      setError("Zielsprache ist erforderlich");
       return;
     }
     if (sourceLanguage === targetLanguage) {
-      setError("Source and target language must be different");
+      setError("Ausgangs- und Zielsprache müssen unterschiedlich sein");
       return;
     }
 
@@ -62,7 +62,7 @@ export function CreateCourseForm({ onClose }: { onClose: () => void }) {
       onSubmit={handleSubmit}
       className="rounded-2xl border-2 border-lingo-border bg-white p-5 space-y-4"
     >
-      <h3 className="text-lg font-bold text-lingo-text">New Course</h3>
+      <h3 className="text-lg font-bold text-lingo-text">Neuer Kurs</h3>
 
       {error && (
         <div className="rounded-xl border-2 border-lingo-red/30 bg-lingo-red/5 px-4 py-2">
@@ -71,17 +71,17 @@ export function CreateCourseForm({ onClose }: { onClose: () => void }) {
       )}
 
       <Input
-        label="Title"
+        label="Titel"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        placeholder="e.g. German Basics"
+        placeholder="z.B. Kroatisch Grundlagen"
         autoFocus
       />
 
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="mb-1.5 block text-sm font-bold text-lingo-text-light uppercase tracking-wide">
-            Source Language
+            Ausgangssprache
           </label>
           <select
             value={sourceLanguage}
@@ -97,14 +97,14 @@ export function CreateCourseForm({ onClose }: { onClose: () => void }) {
         </div>
         <div>
           <label className="mb-1.5 block text-sm font-bold text-lingo-text-light uppercase tracking-wide">
-            Target Language
+            Zielsprache
           </label>
           <select
             value={targetLanguage}
             onChange={(e) => setTargetLanguage(e.target.value)}
             className="w-full rounded-xl border-2 border-lingo-border bg-white px-4 py-3 text-base text-lingo-text focus:border-lingo-blue focus:outline-none transition-colors"
           >
-            <option value="">Select...</option>
+            <option value="">Auswählen...</option>
             {LANGUAGES.map((code) => (
               <option key={code} value={code}>
                 {getLanguageName(code)}
@@ -116,7 +116,7 @@ export function CreateCourseForm({ onClose }: { onClose: () => void }) {
 
       <div>
         <label className="mb-1.5 block text-sm font-bold text-lingo-text-light uppercase tracking-wide">
-          Level
+          Niveau
         </label>
         <select
           value={level}
@@ -133,7 +133,7 @@ export function CreateCourseForm({ onClose }: { onClose: () => void }) {
 
       <div className="flex items-center gap-2 pt-1">
         <Button type="submit" size="sm" loading={isPending}>
-          Create
+          Erstellen
         </Button>
         <Button
           type="button"
@@ -142,7 +142,7 @@ export function CreateCourseForm({ onClose }: { onClose: () => void }) {
           onClick={onClose}
           disabled={isPending}
         >
-          Cancel
+          Abbrechen
         </Button>
       </div>
     </form>

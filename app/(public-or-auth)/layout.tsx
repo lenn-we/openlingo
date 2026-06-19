@@ -70,13 +70,13 @@ export default async function PublicOrAuthLayout({
             href={`/sign-in${redirectParam}`}
             className="rounded-xl px-3 py-1.5 text-sm font-bold text-lingo-text-light hover:bg-lingo-gray/50 transition-colors"
           >
-            Sign In
+            Anmelden
           </Link>
           <Link
             href={`/sign-up${redirectParam}`}
             className="rounded-xl bg-lingo-green px-4 py-1.5 text-sm font-bold text-white border-b-2 border-lingo-green-dark hover:bg-lingo-green/90 transition-colors"
           >
-            Sign Up
+            Registrieren
           </Link>
         </div>
       </header>

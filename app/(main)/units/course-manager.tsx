@@ -78,7 +78,7 @@ export function CourseManager({ courseId, isAdmin }: CourseManagerProps) {
   if (loading) {
     return (
       <div className="p-4 text-center text-sm text-lingo-text-light">
-        Loading...
+        Lädt...
       </div>
     );
   }
@@ -86,7 +86,7 @@ export function CourseManager({ courseId, isAdmin }: CourseManagerProps) {
   if (error || !courseData) {
     return (
       <div className="p-4 text-center text-sm text-lingo-red">
-        {error ?? "Failed to load course data"}
+        {error ?? "Fehler beim Laden der Kursdaten"}
       </div>
     );
   }
@@ -98,8 +98,8 @@ export function CourseManager({ courseId, isAdmin }: CourseManagerProps) {
       {isLocked && (
         <div className="rounded-xl border-2 border-amber-200 bg-amber-50 px-4 py-2">
           <p className="text-sm font-medium text-amber-700">
-            This course is public and can no longer be edited. Only admins can
-            make changes.
+            Dieser Kurs ist öffentlich und kann nicht mehr bearbeitet werden. Nur Admins können
+            Änderungen vornehmen.
           </p>
         </div>
       )}
@@ -107,11 +107,11 @@ export function CourseManager({ courseId, isAdmin }: CourseManagerProps) {
       {/* Current units in course */}
       <div>
         <h4 className="text-sm font-bold text-lingo-text-light uppercase tracking-wide mb-2">
-          Units in this course ({courseData.units.length})
+          Lektionen in diesem Kurs ({courseData.units.length})
         </h4>
         {courseData.units.length === 0 ? (
           <p className="text-sm text-lingo-text-light py-2">
-            No units yet. Add units from your standalone units below.
+            Noch keine Lektionen. Füge Lektionen aus deinen eigenständigen Lektionen hinzu.
           </p>
         ) : (
           <div className="space-y-2">
@@ -126,7 +126,7 @@ export function CourseManager({ courseId, isAdmin }: CourseManagerProps) {
                     {u.title}
                   </p>
                   <p className="text-xs text-lingo-text-light">
-                    {u.lessonCount} {u.lessonCount === 1 ? "lesson" : "lessons"}
+                    {u.lessonCount} {u.lessonCount === 1 ? "Lektion" : "Lektionen"}
                   </p>
                 </div>
                 {!isLocked && (
@@ -135,7 +135,7 @@ export function CourseManager({ courseId, isAdmin }: CourseManagerProps) {
                     disabled={isPending}
                     className="shrink-0 rounded-lg px-2 py-1 text-xs font-bold text-red-500 hover:bg-red-50 transition-colors disabled:opacity-50"
                   >
-                    Remove
+                    Entfernen
                   </button>
                 )}
               </div>
@@ -148,7 +148,7 @@ export function CourseManager({ courseId, isAdmin }: CourseManagerProps) {
       {!isLocked && availableUnits.length > 0 && (
         <div>
           <h4 className="text-sm font-bold text-lingo-text-light uppercase tracking-wide mb-2">
-            Add from your units
+            Aus deinen Lektionen hinzufügen
           </h4>
           <div className="space-y-2">
             {availableUnits.map((u) => (
@@ -162,7 +162,7 @@ export function CourseManager({ courseId, isAdmin }: CourseManagerProps) {
                     {u.title}
                   </p>
                   <p className="text-xs text-lingo-text-light">
-                    {u.lessonCount} {u.lessonCount === 1 ? "lesson" : "lessons"}
+                    {u.lessonCount} {u.lessonCount === 1 ? "Lektion" : "Lektionen"}
                   </p>
                 </div>
                 <button
@@ -170,7 +170,7 @@ export function CourseManager({ courseId, isAdmin }: CourseManagerProps) {
                   disabled={isPending}
                   className="shrink-0 rounded-lg border-2 border-lingo-blue bg-lingo-blue px-2 py-1 text-xs font-bold text-white transition-all hover:bg-lingo-blue/90 disabled:opacity-50"
                 >
-                  {isPending ? "..." : "+ Add"}
+                  {isPending ? "..." : "+ Hinzufügen"}
                 </button>
               </div>
             ))}
@@ -180,7 +180,7 @@ export function CourseManager({ courseId, isAdmin }: CourseManagerProps) {
 
       {!isLocked && availableUnits.length === 0 && courseData.units.length > 0 && (
         <p className="text-xs text-lingo-text-light text-center py-2">
-          No standalone units available to add. Create a new unit first.
+          Keine eigenständigen Lektionen verfügbar. Erstelle zuerst eine neue Lektion.
         </p>
       )}
     </div>

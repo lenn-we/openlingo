@@ -19,13 +19,13 @@ export function PublicUnitPath({ unit }: PublicUnitPathProps) {
       {/* Sign-up CTA banner */}
       <div className="mb-6 rounded-2xl border-2 border-lingo-green/30 bg-lingo-green/5 p-4 text-center">
         <p className="text-sm font-bold text-lingo-text mb-2">
-          Sign up to start learning!
+          Registrieren und loslegen!
         </p>
         <Link
           href={signUpUrl}
           className="inline-flex items-center justify-center rounded-xl bg-lingo-green px-6 py-2 text-sm font-bold text-white border-b-2 border-lingo-green-dark hover:bg-lingo-green/90 transition-colors"
         >
-          Get Started Free
+          Kostenlos starten
         </Link>
       </div>
 

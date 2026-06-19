@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const lessonCount = unit.lessons.length;
   const languageName = getLanguageName(unit.targetLanguage);
   const details = [
-    lessonCount > 0 ? `${lessonCount} ${lessonCount === 1 ? "lesson" : "lessons"}` : null,
+    lessonCount > 0 ? `${lessonCount} ${lessonCount === 1 ? "Lektion" : "Lektionen"}` : null,
     languageName,
     unit.level,
   ].filter(Boolean).join(" · ");
@@ -97,25 +97,25 @@ export default async function StandaloneUnitPage({ params }: PageProps) {
         <div className="rounded-2xl border-2 border-red-200 bg-red-50 p-6 text-center">
           <div className="mb-3 text-3xl">&#9888;&#65039;</div>
           <h2 className="text-lg font-bold text-red-700 mb-2">
-            Unit can&apos;t be parsed
+            Lektion kann nicht geladen werden
           </h2>
           <p className="text-sm text-red-600 mb-4">
-            This unit&apos;s markdown contains errors and cannot be loaded. The
-            exercises could not be parsed correctly.
+            Das Markdown dieser Lektion enthält Fehler und kann nicht geladen werden. Die
+            Übungen konnten nicht korrekt verarbeitet werden.
           </p>
           <div className="flex justify-center gap-3">
             <Link
               href="/units"
               className="rounded-xl border-2 border-lingo-border bg-white px-4 py-2 text-sm font-bold text-lingo-text hover:bg-lingo-gray/30 transition-colors"
             >
-              Back to Units
+              Zurück zu Lektionen
             </Link>
             {session?.user?.id && (
               <Link
                 href={`/units/edit/${unitId}`}
                 className="rounded-xl border-2 border-lingo-blue bg-lingo-blue px-4 py-2 text-sm font-bold text-white hover:bg-lingo-blue/90 transition-colors"
               >
-                Edit Markdown
+                Markdown bearbeiten
               </Link>
             )}
           </div>

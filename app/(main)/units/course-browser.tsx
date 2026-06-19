@@ -36,7 +36,7 @@ export function CourseBrowser({ courses, filters, initialSourceLanguage, initial
   return (
     <section>
       <h2 className="mb-4 text-xl font-black text-lingo-text">
-        Browse Courses
+        Kurse durchsuchen
       </h2>
 
       {hasFilters && (
@@ -47,7 +47,7 @@ export function CourseBrowser({ courses, filters, initialSourceLanguage, initial
               onChange={(e) => setSourceLanguage(e.target.value)}
               className="max-w-full min-w-0 rounded-lg border-2 border-lingo-border bg-lingo-card px-3 py-2 text-sm font-bold text-lingo-text"
             >
-              <option value="">All source languages</option>
+              <option value="">Alle Ausgangssprachen</option>
               {filters.sourceLanguages.map((lang) => (
                 <option key={lang} value={lang}>
                   {getLanguageName(lang)}
@@ -61,7 +61,7 @@ export function CourseBrowser({ courses, filters, initialSourceLanguage, initial
               onChange={(e) => setTargetLanguage(e.target.value)}
               className="max-w-full min-w-0 rounded-lg border-2 border-lingo-border bg-lingo-card px-3 py-2 text-sm font-bold text-lingo-text"
             >
-              <option value="">All target languages</option>
+              <option value="">Alle Zielsprachen</option>
               {filters.targetLanguages.map((lang) => (
                 <option key={lang} value={lang}>
                   {getLanguageName(lang)}
@@ -75,7 +75,7 @@ export function CourseBrowser({ courses, filters, initialSourceLanguage, initial
               onChange={(e) => setLevel(e.target.value)}
               className="max-w-full min-w-0 rounded-lg border-2 border-lingo-border bg-lingo-card px-3 py-2 text-sm font-bold text-lingo-text"
             >
-              <option value="">All levels</option>
+              <option value="">Alle Niveaus</option>
               {filters.levels.map((l) => (
                 <option key={l} value={l}>
                   {l}
@@ -88,7 +88,7 @@ export function CourseBrowser({ courses, filters, initialSourceLanguage, initial
 
       {filtered.length === 0 ? (
         <p className="py-8 text-center text-lingo-text-light">
-          No courses match your filters.
+          Keine Kurse entsprechen deinen Filtern.
         </p>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2">

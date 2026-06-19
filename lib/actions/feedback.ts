@@ -49,9 +49,7 @@ export async function submitFeedback(
         .where(eq(account.userId, session.user.id));
 
       const providers = accounts.map((a) => a.providerId);
-      if (providers.includes("google")) {
-        authMethod = "Google OAuth";
-      } else if (providers.includes("credential")) {
+      if (providers.includes("credential")) {
         authMethod = "Email/Password";
       } else {
         authMethod = providers.join(", ") || "Unknown";

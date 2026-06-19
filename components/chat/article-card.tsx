@@ -21,7 +21,7 @@ export function ArticleCard({
 }: ArticleCardProps) {
   const router = useRouter();
   const [status, setStatus] = useState(initialStatus);
-  const [title, setTitle] = useState(initialTitle || "Translating...");
+  const [title, setTitle] = useState(initialTitle || "Wird übersetzt...");
   const [progress, setProgress] = useState(0);
   const [total, setTotal] = useState(0);
   const [createdAt, setCreatedAt] = useState<string | null>(null);
@@ -141,10 +141,10 @@ export function ArticleCard({
             </div>
             <span className="text-[10px] font-medium text-lingo-text-light shrink-0">
               {status === "fetching"
-                ? "Fetching..."
+                ? "Wird geladen..."
                 : total > 0
                   ? `${progress}/${total}`
-                  : "Starting..."}
+                  : "Startet..."}
             </span>
           </div>
         </div>
@@ -154,7 +154,7 @@ export function ArticleCard({
       {hasFailed && (
         <div className="px-4 pb-3">
           <p className="text-xs text-lingo-red/80">
-            Couldn&apos;t read this article, but other articles should work :)
+            Artikel konnte nicht gelesen werden, aber andere Artikel sollten funktionieren :)
           </p>
         </div>
       )}
@@ -172,10 +172,10 @@ export function ArticleCard({
           }`}
         >
           {status === "completed"
-            ? "Read Article"
+            ? "Artikel lesen"
             : hasFailed
-              ? "View Details"
-              : "View Progress"}
+              ? "Details"
+              : "Fortschritt"}
         </button>
       </div>
     </div>
