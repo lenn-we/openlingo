@@ -13,7 +13,7 @@ export function ThinkingMessage() {
 
         <div className="flex w-full flex-col gap-2">
           <div className="flex items-center gap-1 text-sm text-lingo-text-light">
-            <span className="animate-pulse">Thinking</span>
+            <span className="animate-pulse">Denkt nach</span>
             <span className="inline-flex">
               <span className="animate-bounce [animation-delay:0ms]">.</span>
               <span className="animate-bounce [animation-delay:150ms]">.</span>

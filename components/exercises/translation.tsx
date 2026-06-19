@@ -67,7 +67,7 @@ export function Translation({ exercise, onResult, onContinue, language, autoplay
           if (e.key === "Enter" && input.trim() && status === "answering") handleCheck();
         }}
         disabled={status !== "answering"}
-        placeholder="Type your answer..."
+          placeholder="Deine Antwort eingeben..."
         className="w-full rounded-xl border-2 border-lingo-border bg-white px-4 py-3 text-lg focus:border-lingo-blue focus:outline-none"
         autoFocus
       />

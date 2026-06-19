@@ -24,7 +24,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.openlingo.dev"),
   title: "OpenLingo",
-  description: "OpenSource AI connected to language learning",
+  description: "OpenSource KI-gestütztes Sprachenlernen",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -47,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="de">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

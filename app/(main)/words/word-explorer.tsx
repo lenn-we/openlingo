@@ -7,13 +7,14 @@ import { useRouter } from "next/navigation";
 interface Word {
   word: string;
   cefr_level: string;
-  english_translation: string;
+  translation: string;
   pos: string;
   example_sentence_native: string;
-  example_sentence_english: string;
+  example_sentence_translation: string;
   gender: string;
   word_frequency?: number;
-  goethe_b1_wordlist?: boolean;
+  aspect?: string;
+  reflexive?: boolean;
 }
 
 interface SrsCard {
@@ -51,7 +52,7 @@ const LEVEL_COLORS: Record<string, string> = {
 };
 
 const POS_LABELS: Record<string, string> = {
-  noun: "Noun",
+  noun: "Nomen",
   verb: "Verb",
   adj: "Adj",
   adjective: "Adj",
@@ -59,7 +60,7 @@ const POS_LABELS: Record<string, string> = {
   adv: "Adv",
   adverb: "Adv",
   pronoun: "Pron",
-  conjunction: "Conj",
+  conjunction: "Konj",
   interjection: "Intj",
   num: "Num",
   number: "Num",
@@ -86,9 +87,9 @@ export function WordExplorer({
     <div>
       {/* Header */}
       <div className="mb-6 text-center">
-        <h1 className="text-2xl font-black text-lingo-text">Words</h1>
+        <h1 className="text-2xl font-black text-lingo-text">Wörter</h1>
         <p className="text-sm text-lingo-text-light mt-1">
-          {words.length.toLocaleString()} words available
+          {words.length.toLocaleString()} Wörter verfügbar
         </p>
       </div>
 
@@ -102,7 +103,7 @@ export function WordExplorer({
               : "text-lingo-text-light hover:text-lingo-text"
           }`}
         >
-          My Words
+          Meine Wörter
           {srsStats.total > 0 && (
             <span className="ml-1.5 text-xs opacity-80">
               ({srsStats.total})
@@ -117,7 +118,7 @@ export function WordExplorer({
               : "text-lingo-text-light hover:text-lingo-text"
           }`}
         >
-          Add Words
+          Wörter hinzufügen
         </button>
       </div>
 
@@ -159,7 +160,7 @@ function AllWordsTab({
       if (
         q &&
         !w.word.toLowerCase().includes(q) &&
-        !w.english_translation.toLowerCase().includes(q)
+        !w.translation.toLowerCase().includes(q)
       )
         return false;
       return true;
@@ -179,16 +180,6 @@ function AllWordsTab({
     [levelWords, srsSet]
   );
 
-  const goetheWords = useMemo(
-    () => words.filter((w) => w.goethe_b1_wordlist === true),
-    [words]
-  );
-
-  const newGoetheWords = useMemo(
-    () => goetheWords.filter((w) => !srsSet.has(w.word.toLowerCase())),
-    [goetheWords, srsSet]
-  );
-
   function handleLevelClick(level: string) {
     setSelectedLevel((prev) => (prev === level ? "" : level));
     setVisibleCount(PAGE_SIZE);
@@ -199,20 +190,7 @@ function AllWordsTab({
       await bulkAddWordsToSrs(
         newWordsInLevel.map((w) => ({
           word: w.word,
-          translation: w.english_translation,
-        })),
-        language
-      );
-      router.refresh();
-    });
-  }
-
-  function handleGoetheBulkAdd() {
-    startTransition(async () => {
-      await bulkAddWordsToSrs(
-        newGoetheWords.map((w) => ({
-          word: w.word,
-          translation: w.english_translation,
+          translation: w.translation,
         })),
         language
       );
@@ -226,7 +204,7 @@ function AllWordsTab({
       if (srsSet.has(key)) {
         await removeWordFromSrs(word.word, language);
       } else {
-        await addWordToSrs(word.word, language, word.english_translation);
+        await addWordToSrs(word.word, language, word.translation);
       }
       router.refresh();
     });
@@ -261,18 +239,6 @@ function AllWordsTab({
       </div>
 
       {/* Bulk add button */}
-      {newGoetheWords.length > 0 && (
-        <button
-          onClick={handleGoetheBulkAdd}
-          disabled={isPending}
-          className="mb-4 w-full rounded-xl bg-lingo-blue py-3 text-sm font-bold text-white hover:bg-lingo-blue-dark transition-colors disabled:opacity-50"
-        >
-          {isPending
-            ? "Adding..."
-            : `Add Goethe B1 Wordlist (${newGoetheWords.length} words)`}
-        </button>
-      )}
-
       {selectedLevel && newWordsInLevel.length > 0 && (
         <button
           onClick={handleBulkAdd}
@@ -280,14 +246,14 @@ function AllWordsTab({
           className="mb-4 w-full rounded-xl bg-lingo-green py-3 text-sm font-bold text-white hover:bg-lingo-green-dark transition-colors disabled:opacity-50"
         >
           {isPending
-            ? "Adding..."
-            : `Add all ${newWordsInLevel.length} ${selectedLevel} words to My Words`}
+            ? "Wird hinzugefügt..."
+            : `Alle ${newWordsInLevel.length} ${selectedLevel}-Wörter zu Meine Wörter hinzufügen`}
         </button>
       )}
 
       {selectedLevel && newWordsInLevel.length === 0 && levelWords.length > 0 && (
         <p className="mb-4 rounded-xl border-2 border-lingo-green/30 bg-lingo-green/5 py-3 text-center text-sm font-bold text-lingo-green-dark">
-          All {selectedLevel} words already in My Words
+          Alle {selectedLevel}-Wörter bereits in Meine Wörter
         </p>
       )}
 
@@ -295,7 +261,7 @@ function AllWordsTab({
       <div className="mb-4">
         <input
           type="text"
-          placeholder="Search words or translations..."
+          placeholder="Wörter oder Übersetzungen suchen..."
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
@@ -307,16 +273,16 @@ function AllWordsTab({
 
       {/* Results count */}
       <p className="mb-3 text-xs font-bold text-lingo-text-light">
-        {filtered.length.toLocaleString()} word
-        {filtered.length !== 1 ? "s" : ""}
-        {selectedLevel && ` at ${selectedLevel}`}
-        {search && ` matching "${search}"`}
+        {filtered.length.toLocaleString()} Wort
+        {filtered.length !== 1 ? "e" : ""}
+        {selectedLevel && ` auf Niveau ${selectedLevel}`}
+        {search && ` passend zu „${search}"`}
       </p>
 
       {/* Word list */}
       {filtered.length === 0 ? (
         <p className="py-12 text-center text-lingo-text-light">
-          No words found.
+          Keine Wörter gefunden.
         </p>
       ) : (
         <div className="space-y-2">
@@ -338,8 +304,8 @@ function AllWordsTab({
           onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
           className="mt-4 w-full rounded-xl border-2 border-lingo-border bg-lingo-card py-3 text-sm font-bold text-lingo-text-light hover:border-lingo-gray-dark hover:text-lingo-text transition-colors"
         >
-          Show more ({Math.min(PAGE_SIZE, filtered.length - visibleCount)} of{" "}
-          {(filtered.length - visibleCount).toLocaleString()} remaining)
+          Mehr anzeigen ({Math.min(PAGE_SIZE, filtered.length - visibleCount)} von{" "}
+          {(filtered.length - visibleCount).toLocaleString()} übrig)
         </button>
       )}
     </div>
@@ -377,7 +343,7 @@ function AllWordCard({
               )}
             </span>
             <span className="text-sm text-lingo-text-light truncate">
-              {w.english_translation}
+              {w.translation}
             </span>
           </div>
         </div>
@@ -404,7 +370,7 @@ function AllWordCard({
                 ? "bg-lingo-green/10 text-lingo-green hover:bg-lingo-red/10 hover:text-lingo-red"
                 : "bg-lingo-gray/60 text-lingo-text-light hover:bg-lingo-green/10 hover:text-lingo-green"
             }`}
-            title={inSrs ? "Remove from My Words" : "Add to My Words"}
+            title={inSrs ? "Aus Meine Wörter entfernen" : "Zu Meine Wörter hinzufügen"}
           >
             {inSrs ? "✓" : "+"}
           </button>
@@ -417,7 +383,7 @@ function AllWordCard({
             {w.example_sentence_native}
           </p>
           <p className="text-lingo-text-light mt-0.5">
-            {w.example_sentence_english}
+            {w.example_sentence_translation}
           </p>
         </div>
       )}
@@ -488,7 +454,7 @@ function MyWordsTab({
   }
 
   function handleRemoveAll() {
-    if (!confirm(`Delete all ${srsStats.total} saved words? This cannot be undone.`)) return;
+    if (!confirm(`Alle ${srsStats.total} gespeicherten Wörter löschen? Dies kann nicht rückgängig gemacht werden.`)) return;
     startTransition(async () => {
       await removeAllWordsFromSrs(language);
       router.refresh();
@@ -496,11 +462,11 @@ function MyWordsTab({
   }
 
   const filters: { key: SrsFilter; label: string; count: number }[] = [
-    { key: "all", label: "All", count: srsStats.total },
-    { key: "due", label: "Due", count: srsStats.due },
-    { key: "new", label: "New", count: srsStats.new },
-    { key: "learning", label: "Learning", count: srsStats.learning },
-    { key: "learned", label: "Learned", count: srsStats.learned },
+    { key: "all", label: "Alle", count: srsStats.total },
+    { key: "due", label: "Fällig", count: srsStats.due },
+    { key: "new", label: "Neu", count: srsStats.new },
+    { key: "learning", label: "Am Lernen", count: srsStats.learning },
+    { key: "learned", label: "Gelernt", count: srsStats.learned },
   ];
 
   return (
@@ -509,19 +475,19 @@ function MyWordsTab({
       <div className="mb-4 grid grid-cols-4 gap-3">
         <div className="rounded-xl border-2 border-lingo-border bg-lingo-card p-3 text-center">
           <p className="text-lg font-black text-lingo-blue">{srsStats.total}</p>
-          <p className="text-xs font-bold text-lingo-text-light">Total</p>
+          <p className="text-xs font-bold text-lingo-text-light">Gesamt</p>
         </div>
         <div className="rounded-xl border-2 border-lingo-border bg-lingo-card p-3 text-center">
           <p className="text-lg font-black text-lingo-text-light">{srsStats.new}</p>
-          <p className="text-xs font-bold text-lingo-text-light">New</p>
+          <p className="text-xs font-bold text-lingo-text-light">Neu</p>
         </div>
         <div className="rounded-xl border-2 border-lingo-border bg-lingo-card p-3 text-center">
           <p className="text-lg font-black text-lingo-orange">{srsStats.due}</p>
-          <p className="text-xs font-bold text-lingo-text-light">Due</p>
+          <p className="text-xs font-bold text-lingo-text-light">Fällig</p>
         </div>
         <div className="rounded-xl border-2 border-lingo-border bg-lingo-card p-3 text-center">
           <p className="text-lg font-black text-lingo-green">{srsStats.learned}</p>
-          <p className="text-xs font-bold text-lingo-text-light">Learned</p>
+          <p className="text-xs font-bold text-lingo-text-light">Gelernt</p>
         </div>
       </div>
 
@@ -532,7 +498,7 @@ function MyWordsTab({
           disabled={isPending}
           className="mb-4 w-full rounded-xl border-2 border-lingo-red/30 py-3 text-sm font-bold text-lingo-red hover:bg-lingo-red/10 transition-colors disabled:opacity-50"
         >
-          {isPending ? "Deleting..." : "Delete All Words"}
+          {isPending ? "Wird gelöscht..." : "Alle Wörter löschen"}
         </button>
       )}
 
@@ -565,7 +531,7 @@ function MyWordsTab({
       <div className="mb-4">
         <input
           type="text"
-          placeholder="Search my words..."
+          placeholder="Meine Wörter durchsuchen..."
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
@@ -577,22 +543,22 @@ function MyWordsTab({
 
       {/* Results count */}
       <p className="mb-3 text-xs font-bold text-lingo-text-light">
-        {filtered.length.toLocaleString()} word
-        {filtered.length !== 1 ? "s" : ""}
+        {filtered.length.toLocaleString()} Wort
+        {filtered.length !== 1 ? "e" : ""}
         {filter !== "all" && ` (${filter})`}
       </p>
 
       {/* Empty state */}
       {srsCards.length === 0 ? (
         <div className="py-12 text-center">
-          <p className="text-lg font-bold text-lingo-text">No words yet</p>
+          <p className="text-lg font-bold text-lingo-text">Noch keine Wörter</p>
           <p className="mt-1 text-sm text-lingo-text-light">
-            Switch to &quot;Add Words&quot; and add words to start learning
+            Wechsle zu &quot;Wörter hinzufügen&quot; und füge Wörter hinzu, um zu lernen
           </p>
         </div>
       ) : filtered.length === 0 ? (
         <p className="py-12 text-center text-lingo-text-light">
-          No words match this filter.
+          Keine Wörter entsprechen diesem Filter.
         </p>
       ) : (
         <div className="space-y-2">
@@ -614,8 +580,8 @@ function MyWordsTab({
           onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
           className="mt-4 w-full rounded-xl border-2 border-lingo-border bg-lingo-card py-3 text-sm font-bold text-lingo-text-light hover:border-lingo-gray-dark hover:text-lingo-text transition-colors"
         >
-          Show more ({Math.min(PAGE_SIZE, filtered.length - visibleCount)} of{" "}
-          {(filtered.length - visibleCount).toLocaleString()} remaining)
+          Mehr anzeigen ({Math.min(PAGE_SIZE, filtered.length - visibleCount)} von{" "}
+          {(filtered.length - visibleCount).toLocaleString()} übrig)
         </button>
       )}
     </div>
@@ -662,7 +628,7 @@ function SrsCardRow({
         <div className="flex items-center gap-2 shrink-0">
           {isDue && (
             <span className="rounded-md bg-lingo-orange/15 px-2 py-0.5 text-xs font-bold text-lingo-orange">
-              Due
+              Fällig
             </span>
           )}
           <span className={`rounded-md px-2 py-0.5 text-xs font-bold ${statusStyle}`}>
@@ -675,31 +641,31 @@ function SrsCardRow({
         <div className="mx-4 mb-4 border-t border-lingo-border pt-3">
           <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
             <div>
-              <span className="font-bold text-lingo-text-light">Interval</span>
+              <span className="font-bold text-lingo-text-light">Intervall</span>
               <span className="ml-2 font-bold text-lingo-text">
                 {formatInterval(card.interval)}
               </span>
             </div>
             <div>
-              <span className="font-bold text-lingo-text-light">Reviews</span>
+              <span className="font-bold text-lingo-text-light">Wiederholungen</span>
               <span className="ml-2 font-bold text-lingo-text">
                 {card.repetitions}
               </span>
             </div>
             <div>
-              <span className="font-bold text-lingo-text-light">Ease</span>
+              <span className="font-bold text-lingo-text-light">Leichtigkeit</span>
               <span className="ml-2 font-bold text-lingo-text">
                 {(card.easeFactor * 100).toFixed(0)}%
               </span>
             </div>
             <div>
-              <span className="font-bold text-lingo-text-light">Next</span>
+              <span className="font-bold text-lingo-text-light">Nächste</span>
               <span className="ml-2 font-bold text-lingo-text">
                 {card.status === "new"
-                  ? "Not started"
+                  ? "Nicht gestartet"
                   : card.nextReviewAt
                     ? isDue
-                      ? "Now"
+                      ? "Jetzt"
                       : formatRelativeDate(new Date(card.nextReviewAt), now)
                     : "—"}
               </span>
@@ -728,7 +694,7 @@ function SrsCardRow({
             disabled={isPending}
             className="mt-3 rounded-lg px-3 py-1.5 text-xs font-bold text-lingo-red hover:bg-lingo-red/10 transition-colors disabled:opacity-50"
           >
-            Remove
+            Entfernen
           </button>
         </div>
       )}
@@ -741,36 +707,36 @@ function SrsCardRow({
 function getStatusLabel(status: string): string {
   switch (status) {
     case "new":
-      return "New";
+      return "Neu";
     case "learning":
-      return "Learning";
+      return "Am Lernen";
     case "review":
-      return "Learned";
+      return "Gelernt";
     default:
-      return "New";
+      return "Neu";
   }
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  New: "bg-lingo-gray/60 text-lingo-text-light",
+  Neu: "bg-lingo-gray/60 text-lingo-text-light",
   Learning: "bg-lingo-blue/15 text-lingo-blue",
   Learned: "bg-lingo-green/15 text-lingo-green-dark",
 };
 
 function formatInterval(days: number): string {
-  if (days === 0) return "New";
-  if (days === 1) return "1 day";
-  if (days < 30) return `${days} days`;
-  if (days < 365) return `${Math.round(days / 30)} mo`;
-  return `${(days / 365).toFixed(1)} yr`;
+  if (days === 0) return "Neu";
+  if (days === 1) return "1 Tag";
+  if (days < 30) return `${days} Tage`;
+  if (days < 365) return `${Math.round(days / 30)} Mon.`;
+  return `${(days / 365).toFixed(1)} J.`;
 }
 
 function formatRelativeDate(date: Date, now: Date): string {
   const diff = date.getTime() - now.getTime();
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-  if (days <= 0) return "Now";
-  if (days === 1) return "Tomorrow";
-  if (days < 30) return `${days}d`;
-  if (days < 365) return `${Math.round(days / 30)}mo`;
-  return `${(days / 365).toFixed(1)}yr`;
+  if (days <= 0) return "Jetzt";
+  if (days === 1) return "Morgen";
+  if (days < 30) return `${days}T`;
+  if (days < 365) return `${Math.round(days / 30)}M`;
+  return `${(days / 365).toFixed(1)}J`;
 }

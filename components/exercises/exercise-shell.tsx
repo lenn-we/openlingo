@@ -72,7 +72,7 @@ export function ExerciseShell({
             disabled={!canCheck}
             className="w-full"
           >
-            Check
+              Prüfen
           </Button>
         </div>
       )}
@@ -82,11 +82,11 @@ export function ExerciseShell({
           <div className="rounded-xl bg-green-50 border-2 border-lingo-green p-4 mb-4">
             <div className="flex items-center gap-2">
               <span className="text-2xl">&#10003;</span>
-              <span className="font-bold text-lingo-green">Correct!</span>
+              <span className="font-bold text-lingo-green">Richtig!</span>
             </div>
           </div>
           <Button onClick={onContinue} className="w-full">
-            Continue
+            Weiter
           </Button>
         </div>
       )}
@@ -96,11 +96,11 @@ export function ExerciseShell({
           <div className="rounded-xl bg-red-50 border-2 border-lingo-red p-4 mb-4">
             <div className="flex items-center gap-2">
               <span className="text-2xl">&#10007;</span>
-              <span className="font-bold text-lingo-red">Incorrect</span>
+              <span className="font-bold text-lingo-red">Falsch</span>
             </div>
             {correctAnswer && (
               <div className="mt-1 text-sm text-lingo-text">
-                Correct answer:{" "}
+                Richtige Antwort:{" "}
                 {correctedMarkdown ? (
                   <Markdown>{correctedMarkdown}</Markdown>
                 ) : (

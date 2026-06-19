@@ -205,6 +205,41 @@ Si clauses (type 1). Basic connectors.`,
   C2: `## Spanish C2 - Full native complexity.`,
 };
 
+export const CROATIAN_CEFR_GUIDELINES: Record<string, string> = {
+  A1: `## Croatian A1 Grammar Constraints
+
+CASES (PADEŽI):
+• Nominative ONLY
+• NO Genitive, Dative, Accusative, Vocative, Locative, Instrumental
+
+VERBS:
+• Present tense ONLY
+• Prefer imperfective verbs
+• Auxiliary: biti, htjeti
+• Basic modal: moći, morati, željeti
+• Reflexive verbs with full "se" form
+
+WORD ORDER:
+• SVO (flexible), enclitics at 2nd position
+
+TO AVOID:
+✗ Aspect pairs ✗ Conditional ✗ Future ✗ Perfect tense ✗ Cases beyond Nominative`,
+
+  A2: `## Croatian A2 Grammar Constraints
+CASES: Nominative + Accusative + Locative (locations)
+VERBS: Present + Perfect + Future I. Introduce aspect distinction (imperfective vs. perfective).
+REFLEXIVE: All reflexive verbs with "se".`,
+
+  B1: `## Croatian B1 Grammar Constraints
+CASES: All 7 cases, but Dative/Locative/Instrumental simplified.
+VERBS: Aspect pairs systematically. Conditional I. Clear perfective/imperfective distinction.
+REFLEXIVE: Full range of reflexive constructions.`,
+
+  B2: `## Croatian B2 - All cases, full aspect system, Conditional II, passive voice.`,
+  C1: `## Croatian C1 - Near-native. Complex aspect nuances, formal register.`,
+  C2: `## Croatian C2 - Full native complexity.`,
+};
+
 export function getCefrGuidelines(language: string, level: string): string {
   const normalizedLevel = level.toUpperCase();
   const normalizedLang = language.toLowerCase();
@@ -234,6 +269,12 @@ export function getCefrGuidelines(language: string, level: string): string {
   ) {
     languageGuideline =
       SPANISH_CEFR_GUIDELINES[normalizedLevel] || SPANISH_CEFR_GUIDELINES.B1;
+  } else if (
+    normalizedLang.includes("croatian") ||
+    normalizedLang.includes("hrvatski")
+  ) {
+    languageGuideline =
+      CROATIAN_CEFR_GUIDELINES[normalizedLevel] || CROATIAN_CEFR_GUIDELINES.B1;
   }
 
   if (languageGuideline) {

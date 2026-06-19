@@ -27,12 +27,18 @@ function shuffle<T>(arr: T[]): T[] {
 export function MatchingPairs({ exercise, onResult, onContinue, language }: Props) {
   const { status, checkAnswer } = useExercise();
   const { play, prefetch, loading: audioLoading } = useAudio();
-  const [leftItems] = useState(() => shuffle(exercise.pairs.map((p) => p.left)));
-  const [rightItems] = useState(() => shuffle(exercise.pairs.map((p) => p.right)));
+  const [leftItems, setLeftItems] = useState<string[]>([]);
+  const [rightItems, setRightItems] = useState<string[]>([]);
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
   const [selectedRight, setSelectedRight] = useState<string | null>(null);
   const [matched, setMatched] = useState<Set<string>>(new Set());
   const [wrong, setWrong] = useState<{ left: string; right: string } | null>(null);
+
+  // Shuffle only on client to avoid hydration mismatch
+  useEffect(() => {
+    setLeftItems(shuffle(exercise.pairs.map((p) => p.left)));
+    setRightItems(shuffle(exercise.pairs.map((p) => p.right)));
+  }, [exercise.pairs]);
 
   useEffect(() => {
     prefetch(leftItems, language);
@@ -98,7 +104,7 @@ export function MatchingPairs({ exercise, onResult, onContinue, language }: Prop
       language={language}
     >
       <h2 className="text-xl font-bold text-lingo-text mb-6">
-        Tap the matching pairs
+            Tippe auf die passenden Paare
       </h2>
       <AudioSpinner loading={audioLoading} />
       <div className="grid grid-cols-2 gap-4">

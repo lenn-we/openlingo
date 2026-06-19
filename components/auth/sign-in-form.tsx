@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Turnstile, type TurnstileRef } from "@/components/auth/turnstile";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,18 +19,8 @@ export function SignInForm({ redirectUrl }: SignInFormProps) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const turnstileRef = useRef<TurnstileRef>(null);
 
   const destination = redirectUrl || "/onboarding";
-
-  const handleTurnstileVerify = useCallback((token: string) => {
-    setTurnstileToken(token);
-  }, []);
-
-  const handleTurnstileExpire = useCallback(() => {
-    setTurnstileToken(null);
-  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -40,18 +29,11 @@ export function SignInForm({ redirectUrl }: SignInFormProps) {
 
     const result = await signIn.email(
       { email, password },
-      {
-        headers: turnstileToken
-          ? { "x-turnstile-token": turnstileToken }
-          : undefined,
-      }
     );
     setLoading(false);
 
     if (result.error) {
-      setError(result.error.message || "Sign in failed");
-      setTurnstileToken(null);
-      turnstileRef.current?.reset();
+      setError(result.error.message || "Anmeldung fehlgeschlagen");
     } else {
       router.push(destination);
     }
@@ -70,17 +52,17 @@ export function SignInForm({ redirectUrl }: SignInFormProps) {
     <div className="space-y-4">
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
-          label="Email"
+          label="E-Mail"
           type="email"
-          placeholder="you@example.com"
+          placeholder="deine@email.de"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
         <Input
-          label="Password"
+          label="Passwort"
           type="password"
-          placeholder="Your password"
+          placeholder="Dein Passwort"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -90,31 +72,24 @@ export function SignInForm({ redirectUrl }: SignInFormProps) {
             href="/forgot-password"
             className="text-sm font-bold text-lingo-blue hover:underline"
           >
-            Forgot password?
+            Passwort vergessen?
           </Link>
         </div>
-        <Turnstile
-          ref={turnstileRef}
-          onVerify={handleTurnstileVerify}
-          onExpire={handleTurnstileExpire}
-          onError={handleTurnstileExpire}
-        />
         {error && (
           <p className="text-sm text-lingo-red font-medium">{error}</p>
         )}
-        <Button
-          type="submit"
-          loading={loading}
-          disabled={turnstileToken === null && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-          className="w-full"
-        >
-          Sign In
-        </Button>
+          <Button
+            type="submit"
+            loading={loading}
+            className="w-full"
+          >
+            Anmelden
+          </Button>
       </form>
 
       <div className="flex items-center gap-3">
         <div className="h-px flex-1 bg-lingo-border" />
-        <span className="text-sm text-lingo-text-light uppercase tracking-wide">or</span>
+        <span className="text-sm text-lingo-text-light uppercase tracking-wide">oder</span>
         <div className="h-px flex-1 bg-lingo-border" />
       </div>
 
@@ -125,16 +100,16 @@ export function SignInForm({ redirectUrl }: SignInFormProps) {
         className="w-full"
       >
         <Image src="/google.svg" alt="" width={20} height={20} className="inline-block mr-2" />
-        Sign in with Google
+        Mit Google anmelden
       </Button>
 
       <p className="text-center text-sm text-lingo-text-light">
-        Don&apos;t have an account?{" "}
+        Noch keinen Account?{" "}
         <Link
           href={redirectUrl ? `/sign-up?redirect=${encodeURIComponent(redirectUrl)}` : "/sign-up"}
           className="font-bold text-lingo-blue hover:underline"
         >
-          Sign Up
+          Registrieren
         </Link>
       </p>
     </div>

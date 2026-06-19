@@ -1,10 +1,10 @@
 ---
 unitTitle: "Matching Pairs"
-description: "Test the matching pairs exercise type"
+description: "Testet den Paare-Zuordnen-Aufgabentyp"
 icon: "🔗"
 color: "#FF9600"
-targetLanguage: "de"
-sourceLanguage: "en"
+targetLanguage: "hr"
+sourceLanguage: "de"
 level: "B1"
 courseId: "32d59a82-257e-40e5-8fb9-61cb1d0d2cc3"
 ---

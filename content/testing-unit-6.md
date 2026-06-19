@@ -1,10 +1,10 @@
 ---
 unitTitle: "Speaking"
-description: "Test the speaking exercise type"
+description: "Testet den Sprech-Aufgabentyp"
 icon: "🎤"
 color: "#FF86D0"
-targetLanguage: "de"
-sourceLanguage: "en"
+targetLanguage: "hr"
+sourceLanguage: "de"
 level: "B1"
 courseId: "32d59a82-257e-40e5-8fb9-61cb1d0d2cc3"
 ---

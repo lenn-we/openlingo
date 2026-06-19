@@ -6,10 +6,10 @@ import { useMobileKeyboardOpen } from "@/hooks/use-mobile-keyboard-open";
 
 const navItems = [
   { href: "/chat", label: "Chat", icon: "💬" },
-  { href: "/units", label: "Units", icon: "📚" },
-  { href: "/words", label: "Words", icon: "🔤" },
-  { href: "/read", label: "Read", icon: "📖" },
-  { href: "/settings", label: "Settings", icon: "⚙️" },
+  { href: "/units", label: "Lektionen", icon: "📚" },
+  { href: "/words", label: "Wörter", icon: "🔤" },
+  { href: "/read", label: "Lesen", icon: "📖" },
+  { href: "/settings", label: "Einstellungen", icon: "⚙️" },
 ];
 
 export function MobileNav() {

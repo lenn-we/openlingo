@@ -11,11 +11,11 @@ Every unit starts with YAML frontmatter containing ALL metadata. The frontmatter
 \`\`\`
 ---
 unitTitle: "Unit Title"
-description: "Short English description of what this unit teaches"
+description: "Kurze Beschreibung auf Deutsch, was diese Lerneinheit vermittelt"
 icon: "📘"
 color: "#4CAF50"
 targetLanguage: "de"
-sourceLanguage: "en"
+sourceLanguage: "de"
 level: "B1"
 ---
 \`\`\`
@@ -23,11 +23,11 @@ level: "B1"
 | Field | Required | Description |
 |-------|----------|-------------|
 | unitTitle | yes | Unit title (in the target language) |
-| description | yes | Short English description |
+| description | yes | Kurze Beschreibung auf Deutsch |
 | icon | yes | Single emoji |
 | color | yes | Hex color code |
 | targetLanguage | yes | ISO 639-1 language code being learned (e.g. "de", "fr", "es") |
-| sourceLanguage | yes | ISO 639-1 native language code (e.g. "en") |
+| sourceLanguage | yes | ISO 639-1 native language code (e.g. "de") |
 | level | yes | CEFR level: A1, A2, B1, B2, C1, C2 |
 
 ## Lesson Sections
@@ -48,7 +48,7 @@ color: "#FF9600"
 | Field | Required | Description |
 |-------|----------|-------------|
 | lessonTitle | yes | Lesson title |
-| description | no | Short description of the lesson |
+| description | no | Kurze Beschreibung der Lektion |
 | icon | no | Single emoji |
 | color | no | Hex color code |
 

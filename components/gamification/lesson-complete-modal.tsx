@@ -18,18 +18,18 @@ export function LessonCompleteModal({
       </div>
 
       <h1 className="text-3xl font-black text-lingo-text mb-2">
-        {perfectScore ? "Perfect!" : "Lesson Complete!"}
+        {perfectScore ? "Perfekt!" : "Lektion abgeschlossen!"}
       </h1>
 
       {perfectScore && (
         <p className="text-lg text-lingo-yellow font-bold mb-4">
-          No mistakes — amazing!
+          Keine Fehler — großartig!
         </p>
       )}
 
       <div className="mt-8">
         <Button onClick={onContinue} className="w-full max-w-xs mx-auto">
-          Continue
+          Weiter
         </Button>
       </div>
     </div>

@@ -71,7 +71,7 @@ export function ChatExercise({
           <span
             className={`font-bold ${completed.correct ? "text-lingo-green" : "text-lingo-red"}`}
           >
-            {completed.correct ? "Correct!" : "Incorrect"}
+            {completed.correct ? "Richtig!" : "Falsch"}
           </span>
         </div>
       </div>
@@ -176,7 +176,7 @@ function ExerciseRenderer({
     default:
       return (
         <p className="text-sm text-lingo-text-light">
-          Unsupported exercise type
+          Nicht unterstützter Aufgabentyp
         </p>
       );
   }

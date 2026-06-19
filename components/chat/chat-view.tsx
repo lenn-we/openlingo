@@ -73,9 +73,9 @@ export function ChatView({
         const title = firstUserMsg
           ? (
               firstUserMsg.parts.find((p) => p.type === "text")?.text ??
-              "New chat"
+              "Neuer Chat"
             ).slice(0, 50)
-          : "New chat";
+          : "Neuer Chat";
         const newId = await createConversation(
           effectiveLanguage,
           title,
@@ -306,7 +306,7 @@ export function ChatView({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Send a message..."
+            placeholder="Nachricht senden..."
             rows={1}
             className="flex-1 resize-none border-none bg-transparent px-2 py-1.5 text-base text-lingo-text placeholder:text-lingo-text-light/50 focus:outline-none md:text-sm"
             style={{ height: "44px", maxHeight: "200px" }}
@@ -399,27 +399,27 @@ function Greeting({
       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-lingo-green/10 ring-1 ring-lingo-green/20 mb-4">
         <span className="text-2xl">{flag}</span>
       </div>
-      <h2 className="text-lg font-bold text-lingo-text mb-2">AI Tutor</h2>
+      <h2 className="text-lg font-bold text-lingo-text mb-2">KI-Tutor</h2>
       <p className="text-sm text-lingo-text-light max-w-sm leading-relaxed">
-        Practice vocabulary, review due words, or create custom lessons. Your
-        current language is {name}.
+        Übe Vokabeln, wiederhole fällige Wörter oder erstelle eigene Lektionen. Deine
+        aktuelle Sprache ist {name}.
       </p>
       <div className="mt-6 flex flex-wrap justify-center gap-2">
         {[
           {
-            label: "Make a new learning unit",
+            label: "Neue Lerneinheit erstellen",
             prompt: "I want to create a new personalised unit",
           },
           {
-            label: "Translate an article",
+            label: "Artikel übersetzen",
             prompt: "I want to create a new translated article",
           },
-          { label: "Let's practice!", prompt: "Let's practice!" },
+          { label: "Lass uns üben!", prompt: "Let's practice!" },
           {
-            label: "How many words are due?",
+            label: "Wie viele Wörter sind fällig?",
             prompt: "How many words are due?",
           },
-          { label: "Teach me something new", prompt: "Teach me something new" },
+          { label: "Bring mir etwas Neues bei", prompt: "Teach me something new" },
         ].map(({ label, prompt }) => (
           <button
             key={label}

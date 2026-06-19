@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, signUp } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Turnstile, type TurnstileRef } from "@/components/auth/turnstile";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -21,18 +20,8 @@ export function SignUpForm({ redirectUrl }: SignUpFormProps) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const turnstileRef = useRef<TurnstileRef>(null);
 
   const destination = redirectUrl || "/onboarding";
-
-  const handleTurnstileVerify = useCallback((token: string) => {
-    setTurnstileToken(token);
-  }, []);
-
-  const handleTurnstileExpire = useCallback(() => {
-    setTurnstileToken(null);
-  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -41,18 +30,11 @@ export function SignUpForm({ redirectUrl }: SignUpFormProps) {
 
     const result = await signUp.email(
       { name, email, password },
-      {
-        headers: turnstileToken
-          ? { "x-turnstile-token": turnstileToken }
-          : undefined,
-      }
     );
     setLoading(false);
 
     if (result.error) {
-      setError(result.error.message || "Sign up failed");
-      setTurnstileToken(null);
-      turnstileRef.current?.reset();
+      setError(result.error.message || "Registrierung fehlgeschlagen");
     } else {
       router.push(destination);
     }
@@ -73,33 +55,27 @@ export function SignUpForm({ redirectUrl }: SignUpFormProps) {
         <Input
           label="Name"
           type="text"
-          placeholder="Your name"
+          placeholder="Dein Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
         <Input
-          label="Email"
+          label="E-Mail"
           type="email"
-          placeholder="you@example.com"
+          placeholder="deine@email.de"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
         <Input
-          label="Password"
+          label="Passwort"
           type="password"
-          placeholder="Create a password"
+          placeholder="Passwort erstellen"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           minLength={8}
-        />
-        <Turnstile
-          ref={turnstileRef}
-          onVerify={handleTurnstileVerify}
-          onExpire={handleTurnstileExpire}
-          onError={handleTurnstileExpire}
         />
         {error && (
           <p className="text-sm text-lingo-red font-medium">{error}</p>
@@ -107,16 +83,15 @@ export function SignUpForm({ redirectUrl }: SignUpFormProps) {
         <Button
           type="submit"
           loading={loading}
-          disabled={turnstileToken === null && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
           className="w-full"
         >
-          Create Account
+          Account erstellen
         </Button>
       </form>
 
       <div className="flex items-center gap-3">
         <div className="h-px flex-1 bg-lingo-border" />
-        <span className="text-sm text-lingo-text-light uppercase tracking-wide">or</span>
+        <span className="text-sm text-lingo-text-light uppercase tracking-wide">oder</span>
         <div className="h-px flex-1 bg-lingo-border" />
       </div>
 
@@ -127,16 +102,16 @@ export function SignUpForm({ redirectUrl }: SignUpFormProps) {
         className="w-full"
       >
         <Image src="/google.svg" alt="" width={20} height={20} className="inline-block mr-2" />
-        Sign up with Google
+        Mit Google registrieren
       </Button>
 
       <p className="text-center text-sm text-lingo-text-light">
-        Already have an account?{" "}
+        Bereits einen Account?{" "}
         <Link
           href={redirectUrl ? `/sign-in?redirect=${encodeURIComponent(redirectUrl)}` : "/sign-in"}
           className="font-bold text-lingo-blue hover:underline"
         >
-          Sign In
+          Anmelden
         </Link>
       </p>
     </div>

@@ -51,7 +51,7 @@ export function FillInTheBlank({ exercise, onResult, onContinue, language, autop
     >
       <div className="flex items-start gap-2 mb-6">
         <h2 className="text-xl font-bold text-lingo-text">
-          Fill in the blank
+            Fülle die Lücke aus
         </h2>
         {!exercise.noAudio?.includes("sentence") && (
           <ReplayButton onPlay={() => play(exercise.sentence.replace("___", exercise.blank), language)} />

@@ -10,7 +10,7 @@ export default async function SignUpPage({ searchParams }: PageProps) {
   return (
     <>
       <h2 className="mb-6 text-center text-2xl font-bold text-lingo-text">
-        Start learning for free!
+        Kostenlos lernen!
       </h2>
       <SignUpForm redirectUrl={redirect} />
     </>

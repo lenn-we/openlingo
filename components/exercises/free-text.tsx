@@ -52,7 +52,7 @@ export function FreeText({ exercise, onResult, onContinue, language }: Props) {
       setCorrect(passed);
       onResultRef.current(passed, userText.trim());
     } catch {
-      setError("Something went wrong. Please try again.");
+      setError("Etwas ist schiefgelaufen. Bitte versuche es erneut.");
       setPhase("writing");
     }
   }, [userText, exercise.afterSubmitPrompt]);
@@ -98,7 +98,7 @@ export function FreeText({ exercise, onResult, onContinue, language }: Props) {
             onChange={(e) => setUserText(e.target.value)}
             onKeyDown={handleKeyDown}
             disabled={phase === "loading"}
-            placeholder="Type your answer here..."
+            placeholder="Deine Antwort hier eingeben..."
             className="w-full rounded-xl border-2 border-lingo-border bg-white p-4 text-lingo-text placeholder:text-lingo-text-light/50 focus:border-lingo-blue focus:outline-none min-h-[120px] resize-y disabled:opacity-50"
             autoFocus
           />
@@ -114,7 +114,7 @@ export function FreeText({ exercise, onResult, onContinue, language }: Props) {
               <div className="flex items-center gap-2">
                 <span className="text-2xl">{correct ? "\u2713" : "\u2717"}</span>
                 <span className={`font-bold ${correct ? "text-lingo-green" : "text-lingo-red"}`}>
-                  {correct ? "Good job!" : "Not quite"}
+                  {correct ? "Gut gemacht!" : "Nicht ganz"}
                 </span>
               </div>
             </div>
@@ -134,19 +134,19 @@ export function FreeText({ exercise, onResult, onContinue, language }: Props) {
             disabled={!userText.trim()}
             className="w-full"
           >
-            Submit
+            Absenden
           </Button>
         )}
 
         {phase === "loading" && (
           <Button loading className="w-full">
-            Submit
+            Absenden
           </Button>
         )}
 
         {phase === "result" && (
           <Button variant={correct ? "primary" : "danger"} onClick={handleContinue} className="w-full">
-            Continue
+            Weiter
           </Button>
         )}
       </div>

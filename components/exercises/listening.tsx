@@ -168,7 +168,7 @@ function ListeningChoices({
       language={language}
     >
       <h2 className="text-xl font-bold text-lingo-text mb-6">
-        What do you hear?
+            Was hörst du?
       </h2>
       {status === "answering" && (
         <div className="flex justify-center mb-4">
@@ -179,7 +179,7 @@ function ListeningChoices({
             }}
             className="w-full rounded-xl border-2 border-lingo-blue bg-blue-50 px-4 py-2 text-sm font-bold text-lingo-blue hover:bg-blue-100 transition-all"
           >
-            Skip, I can&apos;t listen now
+            Überspringen, ich kann gerade nicht zuhören
           </button>
         </div>
       )}
@@ -187,7 +187,7 @@ function ListeningChoices({
       <AudioSpinner loading={audioLoading} />
       {!played && !audioLoading && (
         <p className="text-center text-sm text-lingo-text-light mb-4">
-          Tap the speaker to hear the phrase
+            Tippe auf den Lautsprecher, um den Satz zu hören
         </p>
       )}
       <div className="space-y-3">
@@ -272,7 +272,7 @@ function ListeningTypeAnswer({
       language={language}
     >
       <h2 className="text-xl font-bold text-lingo-text mb-6">
-        Type what you hear
+            Tippe ein, was du hörst
       </h2>
       {status === "answering" && (
         <div className="flex justify-center mb-4">
@@ -283,7 +283,7 @@ function ListeningTypeAnswer({
             }}
             className="w-full rounded-xl border-2 border-lingo-blue bg-blue-50 px-4 py-2 text-sm font-bold text-lingo-blue hover:bg-blue-100 transition-all"
           >
-            Skip, I can&apos;t listen now
+            Überspringen, ich kann gerade nicht zuhören
           </button>
         </div>
       )}
@@ -291,7 +291,7 @@ function ListeningTypeAnswer({
       <AudioSpinner loading={audioLoading} />
       {!played && !audioLoading && (
         <p className="text-center text-sm text-lingo-text-light mb-4">
-          Tap the speaker to hear the phrase
+            Tippe auf den Lautsprecher, um den Satz zu hören
         </p>
       )}
       <input
@@ -300,7 +300,7 @@ function ListeningTypeAnswer({
         value={answer}
         onChange={(e) => setAnswer(e.target.value)}
         disabled={status !== "answering"}
-        placeholder="Type what you hear..."
+          placeholder="Tippe ein, was du hörst..."
         className="w-full rounded-xl border-2 border-lingo-border bg-white p-4 text-lg font-medium text-lingo-text placeholder:text-lingo-gray-dark focus:border-lingo-blue focus:outline-none disabled:opacity-60"
         autoComplete="off"
         autoCorrect="off"
@@ -399,7 +399,7 @@ function ListeningWordBank({
       language={language}
     >
       <h2 className="text-xl font-bold text-lingo-text mb-6">
-        What do you hear?
+            Was hörst du?
       </h2>
       {status === "answering" && (
         <div className="flex justify-center mb-4">
@@ -410,7 +410,7 @@ function ListeningWordBank({
             }}
             className="w-full rounded-xl border-2 border-lingo-blue bg-blue-50 px-4 py-2 text-sm font-bold text-lingo-blue hover:bg-blue-100 transition-all"
           >
-            Skip, I can&apos;t listen now
+            Überspringen, ich kann gerade nicht zuhören
           </button>
         </div>
       )}
@@ -418,14 +418,14 @@ function ListeningWordBank({
       <AudioSpinner loading={audioLoading} />
       {!played && !audioLoading && (
         <p className="text-center text-sm text-lingo-text-light mb-4">
-          Tap the speaker to hear the phrase
+            Tippe auf den Lautsprecher, um den Satz zu hören
         </p>
       )}
 
       {/* Answer area */}
       <div className="min-h-[60px] rounded-xl border-2 border-lingo-border bg-white p-3 mb-6 flex flex-wrap gap-2">
         {selected.length === 0 && (
-          <span className="text-lingo-gray-dark">Tap words to build your answer</span>
+          <span className="text-lingo-gray-dark">            Wörter antippen, um deine Antwort zu bilden</span>
         )}
         {selected.map((item, i) => (
           <button

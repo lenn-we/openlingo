@@ -6,9 +6,11 @@ CREATE TABLE srs_card (
   translation TEXT NOT NULL,
   cefr_level  TEXT,                     -- A1, A2, B1, B2, C1, C2
   pos         TEXT,                     -- part of speech
-  gender      TEXT,                     -- grammatical gender (nullable)
+  gender      TEXT,                     -- grammatical gender ('m'/'f'/'n', nullable)
+  aspect      TEXT,                     -- 'perfective'/'imperfective'/'biaspectual', null for non-verbs
+  reflexive   BOOLEAN DEFAULT false,    -- true for reflexive verbs (povratni glagoli)
   example_native  TEXT,
-  example_english TEXT,
+  example_translation  TEXT,
   status      TEXT NOT NULL DEFAULT 'new',   -- 'new' | 'learning' | 'review'
   ease_factor REAL NOT NULL DEFAULT 2.5,
   interval    INTEGER NOT NULL DEFAULT 0,    -- days until next review

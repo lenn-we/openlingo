@@ -4,12 +4,10 @@ import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { account } from "@/lib/db/schema";
 import { getSession } from "@/lib/auth-server";
-import { verifyTurnstileToken } from "@/lib/turnstile";
 
 interface FeedbackInput {
   message: string;
   email?: string;
-  turnstileToken?: string;
 }
 
 interface FeedbackResult {
@@ -20,28 +18,18 @@ interface FeedbackResult {
 export async function submitFeedback(
   input: FeedbackInput
 ): Promise<FeedbackResult> {
-  const { message, email, turnstileToken } = input;
+  const { message, email } = input;
 
   if (!message.trim()) {
-    return { success: false, error: "Message is required" };
+    return { success: false, error: "Nachricht ist erforderlich" };
   }
 
   const session = await getSession();
 
-  // Unauthenticated: require turnstile and email
+  // Unauthenticated: require email
   if (!session) {
     if (!email?.trim()) {
-      return { success: false, error: "Email is required" };
-    }
-
-    if (turnstileToken) {
-      const result = await verifyTurnstileToken(turnstileToken);
-      if (!result.success) {
-        return {
-          success: false,
-          error: "Bot verification failed. Please try again.",
-        };
-      }
+      return { success: false, error: "E-Mail ist erforderlich" };
     }
   }
 

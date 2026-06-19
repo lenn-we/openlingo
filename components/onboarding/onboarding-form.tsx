@@ -63,15 +63,15 @@ export function OnboardingForm({
     setError("");
 
     if (!target) {
-      setError("Please select a language to learn.");
+      setError("Bitte wähle eine Sprache zum Lernen.");
       return;
     }
     if (!native) {
-      setError("Please select your native language.");
+      setError("Bitte wähle deine Muttersprache.");
       return;
     }
     if (target === native) {
-      setError("Your learning language and native language must be different.");
+      setError("Lernsprache und Muttersprache müssen unterschiedlich sein.");
       return;
     }
 
@@ -88,14 +88,14 @@ export function OnboardingForm({
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
         <label className="block text-sm font-bold text-lingo-text-light">
-          I want to learn
+          Ich möchte lernen
         </label>
         <select
           value={target}
           onChange={(e) => setTarget(e.target.value)}
           className="w-full rounded-xl border-2 border-lingo-border bg-white px-4 py-4 text-lg font-bold text-lingo-text focus:border-lingo-green focus:outline-none transition-colors"
         >
-          <option value="" disabled>Select a language</option>
+          <option value="" disabled>Sprache auswählen</option>
           {TARGET_LANGUAGES.map((code) => (
             <option key={code} value={code}>
               {getLanguageFlag(code)} {getLanguageName(code)}
@@ -106,14 +106,14 @@ export function OnboardingForm({
 
       <div className="space-y-2">
         <label className="block text-sm font-bold text-lingo-text-light">
-          I speak (native language)
+          Ich spreche (Muttersprache)
         </label>
         <select
           value={native}
           onChange={(e) => setNative(e.target.value)}
           className="w-full rounded-xl border-2 border-lingo-border bg-white px-4 py-4 text-lg font-bold text-lingo-text focus:border-lingo-green focus:outline-none transition-colors"
         >
-          <option value="" disabled>Select your language</option>
+          <option value="" disabled>Deine Sprache auswählen</option>
           {NATIVE_LANGUAGES.map((code) => (
             <option key={code} value={code}>
               {getLanguageFlag(code)} {getLanguageName(code)}
@@ -125,7 +125,7 @@ export function OnboardingForm({
       {error && <p className="text-sm text-lingo-red font-medium">{error}</p>}
 
       <Button type="submit" size="lg" loading={saving} className="w-full">
-        Get Started
+        Loslegen
       </Button>
     </form>
   );

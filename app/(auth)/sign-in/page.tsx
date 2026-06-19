@@ -10,7 +10,7 @@ export default async function SignInPage({ searchParams }: PageProps) {
   return (
     <>
       <h2 className="mb-6 text-center text-2xl font-bold text-lingo-text">
-        Welcome back!
+        Willkommen zurück!
       </h2>
       <SignInForm redirectUrl={redirect} />
     </>

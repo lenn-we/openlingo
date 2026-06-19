@@ -109,7 +109,7 @@ export function TopBar({ stats, githubStars }: TopBarProps) {
           onClick={handleSignOut}
           className="rounded-xl px-3 py-1.5 text-sm font-bold text-lingo-text-light hover:bg-lingo-gray/50 transition-colors"
         >
-          Sign Out
+          Abmelden
         </button>
       </div>
     </header>

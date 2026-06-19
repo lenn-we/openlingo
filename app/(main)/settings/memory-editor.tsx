@@ -22,19 +22,19 @@ export function MemoryEditor({ initialValue }: { initialValue: string }) {
         <h2 className="text-lg font-black text-lingo-text">Memory</h2>
         {saved && (
           <span className="text-xs font-bold text-lingo-green bg-lingo-green/10 px-2 py-0.5 rounded-full">
-            Saved
+            Gespeichert
           </span>
         )}
       </div>
       <p className="text-sm text-lingo-text-light font-bold mb-3">
-        The AI reads this at the start of every conversation. Edit it to correct
-        mistakes or add context about yourself.
+        Die KI liest dies zu Beginn jeder Unterhaltung. Bearbeite den Text, um
+        Fehler zu korrigieren oder Kontext über dich hinzuzufügen.
       </p>
 
       <textarea
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="No memories yet. The AI will add notes here as you chat, or you can write your own."
+        placeholder="Noch keine Erinnerungen. Die KI fügt hier Notizen hinzu, während du chattest – oder du schreibst selbst."
         className="w-full p-3 text-sm font-mono rounded-xl border-2 border-lingo-border bg-lingo-gray/20 resize-none focus:outline-none focus:border-lingo-blue h-40"
       />
 
@@ -44,14 +44,14 @@ export function MemoryEditor({ initialValue }: { initialValue: string }) {
           disabled={saving}
           className="px-4 py-2 bg-lingo-blue text-white text-sm font-bold rounded-xl border-b-4 border-lingo-blue/70 active:border-b-0 active:mt-1 transition-all disabled:opacity-50"
         >
-          {saving ? "Saving..." : "Save"}
+          {saving ? "Speichern..." : "Speichern"}
         </button>
         {value && (
           <button
             onClick={() => setValue("")}
             className="px-4 py-2 text-sm font-bold text-lingo-text-light hover:text-lingo-text rounded-xl transition-colors"
           >
-            Clear
+            Löschen
           </button>
         )}
       </div>

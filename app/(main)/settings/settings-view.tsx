@@ -32,15 +32,15 @@ export function SettingsView({
 
   return (
     <div className="mx-auto max-w-2xl py-6">
-      <h1 className="text-2xl font-black text-lingo-text mb-1">Settings</h1>
+      <h1 className="text-2xl font-black text-lingo-text mb-1">Einstellungen</h1>
       <p className="text-sm text-lingo-text-light font-bold mb-6">
-        Customize your language preferences and AI settings.
+        Passe deine Sprach-Einstellungen und KI-Optionen an.
       </p>
 
       {/* Language settings */}
       <div className="rounded-2xl border-2 border-lingo-border bg-white p-5 mb-6 space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-bold text-lingo-text-light">Learning Language</span>
+          <span className="text-sm font-bold text-lingo-text-light">Lernsprache</span>
           <select
             value={targetLanguage ?? ""}
             disabled={savingTarget}
@@ -51,7 +51,7 @@ export function SettingsView({
             }}
             className="rounded-lg border-2 border-lingo-border bg-lingo-card px-3 py-1.5 text-sm font-bold text-lingo-text disabled:opacity-50"
           >
-            <option value="" disabled>Select a language</option>
+            <option value="" disabled>Sprache auswählen</option>
             {TARGET_LANGUAGES.map((code) => (
               <option key={code} value={code}>
                 {getLanguageName(code)}
@@ -60,7 +60,7 @@ export function SettingsView({
           </select>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-sm font-bold text-lingo-text-light">Native Language</span>
+          <span className="text-sm font-bold text-lingo-text-light">Muttersprache</span>
           <select
             value={nativeLanguage ?? ""}
             disabled={savingNative}
@@ -71,7 +71,7 @@ export function SettingsView({
             }}
             className="rounded-lg border-2 border-lingo-border bg-lingo-card px-3 py-1.5 text-sm font-bold text-lingo-text disabled:opacity-50"
           >
-            <option value="" disabled>Select language</option>
+            <option value="" disabled>Sprache auswählen</option>
             {NATIVE_LANGUAGES.map((code) => (
               <option key={code} value={code}>
                 {getLanguageName(code)}

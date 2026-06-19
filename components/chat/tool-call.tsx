@@ -3,23 +3,23 @@
 import { useState } from "react";
 
 const TOOL_LABELS: Record<string, string> = {
-  srs: "Running SRS query",
-  readMemory: "Reading memory",
-  addMemory: "Saving to memory",
-  rewriteAllMemory: "Rewriting memory",
-  presentExercise: "Presenting exercise",
-  createUnit: "Creating learning unit",
-  addWordsToSrs: "Adding words to SRS",
-  switchLanguage: "Switching language",
-  webSearch: "Searching the web",
-  readArticle: "Reading article",
+  srs: "SRS-Abfrage läuft",
+  readMemory: "Lese Erinnerungen",
+  addMemory: "Speichere Erinnerung",
+  rewriteAllMemory: "Schreibe Erinnerungen neu",
+  presentExercise: "Übung wird angezeigt",
+  createUnit: "Lerneinheit wird erstellt",
+  addWordsToSrs: "Wörter zu SRS hinzufügen",
+  switchLanguage: "Sprache wechseln",
+  webSearch: "Suche im Web",
+  readArticle: "Artikel lesen",
 };
 
 const STATE_LABELS: Record<string, string> = {
-  "input-streaming": "Pending",
-  "input-available": "Running",
-  "output-available": "Completed",
-  "output-error": "Error",
+  "input-streaming": "Ausstehend",
+  "input-available": "Läuft",
+  "output-available": "Abgeschlossen",
+  "output-error": "Fehler",
 };
 
 interface ToolCallProps {
@@ -122,7 +122,7 @@ export function ToolCall({ toolName, state, input, output }: ToolCallProps) {
           {input && Object.keys(input).length > 0 && (
             <div className="px-3 py-2">
               <h4 className="text-[10px] font-medium uppercase tracking-wide text-lingo-text-light mb-1">
-                Parameters
+                Parameter
               </h4>
               <pre className="overflow-x-auto rounded-md bg-lingo-gray/50 p-2 font-mono text-[11px] text-lingo-text">
                 {JSON.stringify(input, null, 2)}
@@ -132,7 +132,7 @@ export function ToolCall({ toolName, state, input, output }: ToolCallProps) {
           {isComplete && output != null && (
             <div className="px-3 py-2 border-t border-lingo-border/50">
               <h4 className="text-[10px] font-medium uppercase tracking-wide text-lingo-text-light mb-1">
-                Result
+                Ergebnis
               </h4>
               <pre className="overflow-x-auto rounded-md bg-lingo-green/5 p-2 font-mono text-[11px] text-lingo-text">
                 {JSON.stringify(output as Record<string, unknown>, null, 2)}
@@ -142,7 +142,7 @@ export function ToolCall({ toolName, state, input, output }: ToolCallProps) {
           {isError && (
             <div className="px-3 py-2 border-t border-lingo-border/50">
               <div className="rounded-md bg-red-50 p-2 text-xs text-lingo-red">
-                Tool execution failed
+                Tool-Ausführung fehlgeschlagen
               </div>
             </div>
           )}

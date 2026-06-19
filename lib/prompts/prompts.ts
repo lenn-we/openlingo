@@ -21,6 +21,7 @@ export const langCodeToName: Record<string, string> = {
   en: "English",
   tr: "Turkish",
   pl: "Polish",
+  hr: "Croatian",
 };
 
 import { CHAT_SYSTEM_PROMPT } from "./chat-system";
@@ -32,8 +33,9 @@ const WORD_ANALYSIS: PromptDefinition = {
   defaultTemplate: `Analyze the {target_language} word "{word}".
 
 If this is an inflected/conjugated form, identify the base/dictionary form.
+If this is a reflexive verb (povratni glagol), the base form MUST include the reflexive pronoun "se" (e.g., "zvati se", not "zvati").
 
-Return the base form, English translation, part of speech, grammatical gender (or null), CEFR level, an example sentence in {target_language}, and its English translation.`,
+Return the base form, translation (in the user's native language), part of speech, grammatical gender (m/f/n for nouns, null for other), verbal aspect (perfective/imperfective/biaspectual for verbs, null for other), whether the word is a reflexive verb, CEFR level, an example sentence in {target_language}, and its translation (in the user's native language).`,
   variables: ["target_language", "word"],
 };
 
@@ -41,7 +43,7 @@ const TTS_INSTRUCTIONS: PromptDefinition = {
   id: "tts-instructions",
   displayName: "TTS Voice",
   description: "Instructions sent to the text-to-speech model",
-  defaultTemplate: `Speak in {target_language} with clear, native pronunciation. Calm, measured pace for learners.`,
+  defaultTemplate: `Speak in {target_language} with clear, native pronunciation. Calm, measured pace for learners. Pay special attention to the correct pronunciation of diacritic letters: č (as in "chalk"), ć (soft "ch"), đ (as in "juice"), š (as in "shoe"), ž (as in "pleasure"), and the digraphs dž, lj, nj.`,
   variables: ["target_language"],
 };
 

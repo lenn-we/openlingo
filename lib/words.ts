@@ -14,13 +14,14 @@ export interface WordEntry {
   word: string;
   pos: string;
   cefr_level: string;
-  english_translation: string;
+  translation: string;
   example_sentence_native: string;
-  example_sentence_english: string;
+  example_sentence_translation: string;
   gender: string;
   useful_for_flashcard?: boolean;
   word_frequency?: number;
-  goethe_b1_wordlist?: boolean;
+  aspect?: string;
+  reflexive?: boolean;
 }
 
 function rowToWordEntry(row: typeof dictionaryWord.$inferSelect): WordEntry {
@@ -28,13 +29,14 @@ function rowToWordEntry(row: typeof dictionaryWord.$inferSelect): WordEntry {
     word: row.word,
     pos: row.pos ?? "",
     cefr_level: row.cefrLevel ?? "",
-    english_translation: row.englishTranslation,
+    translation: row.translation,
     example_sentence_native: row.exampleSentenceNative ?? "",
-    example_sentence_english: row.exampleSentenceEnglish ?? "",
+    example_sentence_translation: row.exampleSentenceTranslation ?? "",
     gender: row.gender ?? "",
     useful_for_flashcard: row.usefulForFlashcard ?? true,
     word_frequency: row.wordFrequency ?? undefined,
-    goethe_b1_wordlist: row.goetheB1Wordlist ?? undefined,
+    aspect: row.aspect ?? undefined,
+    reflexive: row.reflexive ?? undefined,
   };
 }
 
@@ -59,8 +61,8 @@ export async function loadLanguage(
 }
 
 const wordAnalysisSchema = z.object({
-  baseForm: z.string().describe("The dictionary/base form of the word"),
-  translation: z.string().describe("English translation"),
+  baseForm: z.string().describe("The dictionary/base form of the word. For reflexive verbs, MUST include 'se' (e.g., 'zvati se')."),
+  translation: z.string().describe("Translation (in the user's native language)"),
   pos: z
     .string()
     .describe(
@@ -69,14 +71,21 @@ const wordAnalysisSchema = z.object({
   gender: z
     .string()
     .nullable()
-    .describe("Grammatical gender if applicable (masculine/feminine/neuter)"),
+    .describe("Grammatical gender: 'm' (muški rod/masculine), 'f' (ženski rod/feminine), 'n' (srednji rod/neuter). null for non-nouns."),
+  aspect: z
+    .string()
+    .nullable()
+    .describe("Verbal aspect: 'perfective' (svršeni), 'imperfective' (nesvršeni), 'biaspectual'. null for non-verbs."),
+  reflexive: z
+    .boolean()
+    .describe("Whether this is a reflexive verb (povratni glagol). The base form must include 'se'."),
   cefrLevel: z.string().describe("CEFR level (A1/A2/B1/B2/C1/C2)"),
   exampleNative: z
     .string()
     .describe("A simple example sentence using this word"),
-  exampleEnglish: z
+  exampleTranslation: z
     .string()
-    .describe("English translation of the example sentence"),
+    .describe("Translation of the example sentence (in the user's native language)"),
 });
 
 export async function aiLookup(
@@ -106,7 +115,9 @@ export async function aiLookup(
       gender: c.gender || null,
       cefrLevel: c.cefrLevel || null,
       exampleNative: c.exampleNative || null,
-      exampleEnglish: c.exampleEnglish || null,
+      exampleTranslation: c.exampleTranslation || null,
+      aspect: c.aspect || null,
+      reflexive: c.reflexive || false,
     };
   }
 
@@ -114,7 +125,7 @@ export async function aiLookup(
     const promptTemplate = getDefaultTemplate("word-analysis");
     const prompt = interpolateTemplate(promptTemplate, { target_language, word });
 
-    const model = getModel("gemini-2.5-flash-lite");
+    const model = getModel("deepseek-v4-pro");
     const { object: analysis } = await generateObject({
       model,
       schema: wordAnalysisSchema,
@@ -132,7 +143,9 @@ export async function aiLookup(
         gender: analysis.gender || null,
         cefrLevel: analysis.cefrLevel || null,
         exampleNative: analysis.exampleNative || null,
-        exampleEnglish: analysis.exampleEnglish || null,
+        exampleTranslation: analysis.exampleTranslation || null,
+        aspect: analysis.aspect || null,
+        reflexive: analysis.reflexive || false,
       })
       .onConflictDoNothing()
       .catch((err: unknown) => {
@@ -148,7 +161,9 @@ export async function aiLookup(
       gender: analysis.gender || null,
       cefrLevel: analysis.cefrLevel || null,
       exampleNative: analysis.exampleNative || null,
-      exampleEnglish: analysis.exampleEnglish || null,
+      exampleTranslation: analysis.exampleTranslation || null,
+      aspect: analysis.aspect || null,
+      reflexive: analysis.reflexive || false,
     };
   } catch (err) {
     console.error("AI lookup failed:", err);
@@ -165,7 +180,9 @@ export type WordLookupResult = {
   gender?: string | null;
   cefrLevel?: string | null;
   exampleNative?: string | null;
-  exampleEnglish?: string | null;
+  exampleTranslation?: string | null;
+  aspect?: string | null;
+  reflexive?: boolean;
 };
 
 export async function lookupWord(
@@ -189,12 +206,14 @@ export async function lookupWord(
       found: true,
       source: "dictionary",
       word: entry.word,
-      translation: entry.englishTranslation,
+      translation: entry.translation,
       pos: entry.pos,
       gender: entry.gender || null,
       cefrLevel: entry.cefrLevel,
       exampleNative: entry.exampleSentenceNative,
-      exampleEnglish: entry.exampleSentenceEnglish,
+      exampleTranslation: entry.exampleSentenceTranslation,
+      aspect: entry.aspect || null,
+      reflexive: entry.reflexive || false,
     };
   }
 

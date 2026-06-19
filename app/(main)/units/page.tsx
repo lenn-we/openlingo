@@ -25,20 +25,20 @@ export default async function LearnPage() {
   return (
     <div className="mx-auto w-full max-w-2xl">
       <div className="mb-6 text-center">
-        <h1 className="text-2xl font-black text-lingo-text">Learn</h1>
+        <h1 className="text-2xl font-black text-lingo-text">Lernen</h1>
       </div>
       <div className="mb-6 flex gap-2 justify-center">
         <Link
           href={`/chat?prompt=${encodeURIComponent(NEW_UNIT_PROMPT)}`}
           className="rounded-xl border-2 border-lingo-border bg-white px-4 py-2.5 text-sm font-bold text-lingo-text shadow-[0_2px_0_0] shadow-lingo-border transition-all hover:border-lingo-green hover:bg-lingo-green/5 active:translate-y-[1px] active:shadow-none"
         >
-          + New Unit
+          + Neue Lektion
         </Link>
         <Link
           href="/units/browse"
           className="rounded-xl border-2 border-lingo-border bg-white px-4 py-2.5 text-sm font-bold text-lingo-text shadow-[0_2px_0_0] shadow-lingo-border transition-all hover:border-lingo-blue hover:bg-lingo-blue/5 active:translate-y-[1px] active:shadow-none"
         >
-          Browse
+          Durchsuchen
         </Link>
       </div>
       <StandaloneUnits units={standaloneUnits} isAdmin={isAdmin} />

@@ -58,7 +58,7 @@ export default async function ReadPage() {
   return (
     <div className="mx-auto max-w-2xl">
       <h1 className="text-2xl font-black text-lingo-text mb-6">
-        Read Articles
+        Artikel lesen
       </h1>
 
       <div className="mb-6 flex gap-2 justify-center">
@@ -66,7 +66,7 @@ export default async function ReadPage() {
           href={`/chat?prompt=${encodeURIComponent(NEW_ARTICLE_PROMPT)}`}
           className="rounded-xl border-2 border-lingo-border bg-white px-4 py-2.5 text-sm font-bold text-lingo-text shadow-[0_2px_0_0] shadow-lingo-border transition-all hover:border-lingo-blue hover:bg-lingo-blue/5 active:translate-y-[1px] active:shadow-none"
         >
-          + New Article
+          + Neuer Artikel
         </Link>
       </div>
 
@@ -74,7 +74,7 @@ export default async function ReadPage() {
         <div className="rounded-xl border-2 border-dashed border-lingo-border p-8 text-center">
           <span className="text-4xl mb-3 block">📖</span>
           <h2 className="text-lg font-bold text-lingo-text mb-1">
-            No articles yet
+            Keine Artikel bisher
           </h2>
         </div>
       ) : (
@@ -97,7 +97,7 @@ export default async function ReadPage() {
                 <span className="text-2xl shrink-0">📖</span>
                 <div className="min-w-0 flex-1">
                   <h3 className="text-sm font-bold text-lingo-text truncate">
-                    {a.title || "Untitled"}
+                    {a.title || "Ohne Titel"}
                   </h3>
                   <p className="text-xs text-lingo-text-light mt-0.5">
                     {getDomain(a.sourceUrl)}
@@ -117,7 +117,7 @@ export default async function ReadPage() {
                     </span>
                     {a.wordCount && a.wordCount > 0 && (
                       <span className="inline-block rounded-full bg-lingo-gray/50 px-2 py-0.5 text-[10px] font-medium text-lingo-text-light">
-                        {a.wordCount} words
+                        {a.wordCount} Wörter
                       </span>
                     )}
                   </div>
@@ -138,7 +138,7 @@ export default async function ReadPage() {
                       </div>
                       <span className="text-[10px] font-medium text-lingo-text-light">
                         {a.status === "fetching"
-                          ? "Fetching..."
+                          ? "Wird geladen..."
                           : `${a.translationProgress}/${a.totalParagraphs}`}
                       </span>
                     </div>
@@ -146,7 +146,7 @@ export default async function ReadPage() {
 
                   {hasFailed && (
                     <p className="text-xs text-lingo-red mt-1.5">
-                      Couldn&apos;t read this article, but other articles should work :)
+                      Artikel konnte nicht gelesen werden, aber andere Artikel sollten funktionieren :)
                     </p>
                   )}
                 </div>

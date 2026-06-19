@@ -121,7 +121,7 @@ export function WordBank({ exercise, onResult, onContinue, language, autoplayAud
       {/* Answer area */}
       <div className="min-h-[60px] rounded-xl border-2 border-lingo-border bg-white p-3 mb-6 flex flex-wrap gap-2">
         {selected.length === 0 && (
-          <span className="text-lingo-gray-dark">Tap words to build your answer</span>
+          <span className="text-lingo-gray-dark">            Wörter antippen, um deine Antwort zu bilden</span>
         )}
         {selected.map((item, i) => (
           <button

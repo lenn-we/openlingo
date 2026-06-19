@@ -34,9 +34,9 @@ export default async function BrowsePage() {
           href="/units"
           className="shrink-0 text-sm font-bold text-lingo-text-light hover:text-lingo-text transition-colors"
         >
-          &larr; Back
+          &larr; Zurück
         </Link>
-        <h1 className="text-2xl font-black text-lingo-text">Browse</h1>
+        <h1 className="text-2xl font-black text-lingo-text">Durchsuchen</h1>
       </div>
 
       <BrowseUnits units={browsableUnits} initialTargetLanguage={targetLanguage} />
@@ -44,14 +44,14 @@ export default async function BrowsePage() {
       {courses.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-lg text-lingo-text-light mb-2">
-            No courses available for your language yet.
+            Noch keine Kurse für deine Sprache verfügbar.
           </p>
           <p className="text-sm text-lingo-text-light">
-            Change your native language in{" "}
+            Ändere deine Muttersprache in den{" "}
             <a href="/settings" className="font-bold text-lingo-blue underline">
-              settings
+              Einstellungen
             </a>{" "}
-            to see more courses.
+            um weitere Kurse zu sehen.
           </p>
         </div>
       ) : (

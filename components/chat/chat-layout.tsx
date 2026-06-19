@@ -63,7 +63,7 @@ export function ChatLayout({ conversations, children }: ChatLayoutProps) {
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
           </svg>
-          New chat
+          Neuer Chat
         </Link>
         <button
           type="button"
@@ -79,7 +79,7 @@ export function ChatLayout({ conversations, children }: ChatLayoutProps) {
       <div className="flex-1 overflow-y-auto px-2 pb-3">
         {sorted.length === 0 && (
           <p className="px-2 py-8 text-center text-xs text-lingo-text-light">
-            No conversations yet
+            Noch keine Unterhaltungen
           </p>
         )}
         {sorted.map((conv) => {

@@ -9,7 +9,7 @@ export default function AuthLayout({
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-black text-lingo-green">OpenLingo</h1>
           <p className="mt-2 text-lingo-text-light">
-            Learn a language. Have fun.
+            Lerne eine Sprache. Hab Spaß.
           </p>
         </div>
         <div className="rounded-2xl bg-white border-2 border-lingo-border p-8">

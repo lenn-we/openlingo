@@ -38,19 +38,19 @@ export function ResetPasswordForm() {
         </div>
         <h3 className="text-lg font-bold text-lingo-text">
           {errorParam === "INVALID_TOKEN"
-            ? "Link expired"
-            : "Invalid reset link"}
+            ? "Link abgelaufen"
+            : "Ungültiger Link"}
         </h3>
         <p className="text-sm text-lingo-text-light">
           {errorParam === "INVALID_TOKEN"
-            ? "This password reset link has expired. Please request a new one."
-            : "This password reset link is invalid. Please request a new one."}
+            ? "Dieser Link ist abgelaufen. Bitte fordere einen neuen an."
+            : "Dieser Link ist ungültig. Bitte fordere einen neuen an."}
         </p>
         <Link
           href="/forgot-password"
           className="inline-block text-sm font-bold text-lingo-blue hover:underline"
         >
-          Request new reset link
+          Neuen Link anfordern
         </Link>
       </div>
     );
@@ -75,17 +75,17 @@ export function ResetPasswordForm() {
           </svg>
         </div>
         <h3 className="text-lg font-bold text-lingo-text">
-          Password updated
+          Passwort aktualisiert
         </h3>
         <p className="text-sm text-lingo-text-light">
-          Your password has been successfully reset. You can now sign in with
-          your new password.
+          Dein Passwort wurde erfolgreich zurückgesetzt. Du kannst dich jetzt mit
+          deinem neuen Passwort anmelden.
         </p>
         <Link
           href="/sign-in"
           className="inline-block text-sm font-bold text-lingo-blue hover:underline"
         >
-          Sign In
+          Anmelden
         </Link>
       </div>
     );
@@ -124,22 +124,22 @@ export function ResetPasswordForm() {
   return (
     <div className="space-y-4">
       <p className="text-sm text-lingo-text-light">
-        Enter your new password below.
+        Gib dein neues Passwort ein.
       </p>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
-          label="New Password"
+          label="Neues Passwort"
           type="password"
-          placeholder="Enter new password"
+          placeholder="Neues Passwort eingeben"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           minLength={8}
         />
         <Input
-          label="Confirm Password"
+          label="Passwort bestätigen"
           type="password"
-          placeholder="Confirm new password"
+          placeholder="Neues Passwort bestätigen"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
@@ -149,16 +149,16 @@ export function ResetPasswordForm() {
           <p className="text-sm text-lingo-red font-medium">{error}</p>
         )}
         <Button type="submit" loading={loading} className="w-full">
-          Reset Password
+          Passwort zurücksetzen
         </Button>
       </form>
       <p className="text-center text-sm text-lingo-text-light">
-        Remember your password?{" "}
+        Passwort gemerkt?{" "}
         <Link
           href="/sign-in"
           className="font-bold text-lingo-blue hover:underline"
         >
-          Sign In
+          Anmelden
         </Link>
       </p>
     </div>

@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/chat", label: "Chat", icon: "💬" },
-  { href: "/units", label: "Units", icon: "📚" },
-  { href: "/read", label: "Read", icon: "📖" },
-  { href: "/words", label: "Words", icon: "🔤" },
-  { href: "/settings", label: "Settings", icon: "⚙️" },
+  { href: "/units", label: "Lektionen", icon: "📚" },
+  { href: "/read", label: "Lesen", icon: "📖" },
+  { href: "/words", label: "Wörter", icon: "🔤" },
+  { href: "/settings", label: "Einstellungen", icon: "⚙️" },
 ];
 
 export function Sidebar() {

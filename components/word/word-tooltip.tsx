@@ -12,7 +12,7 @@ interface WordData {
   gender?: string | null;
   cefrLevel?: string;
   exampleNative?: string;
-  exampleEnglish?: string;
+  exampleTranslation?: string;
 }
 
 const cefrColors: Record<string, string> = {
@@ -124,8 +124,8 @@ export function WordTooltip({ word, language }: WordTooltipProps) {
       {data.exampleNative && (
         <div className="rounded-lg bg-lingo-bg p-2.5">
           <p className="text-sm font-medium text-lingo-text">{data.exampleNative}</p>
-          {data.exampleEnglish && (
-            <p className="text-xs text-lingo-text-light mt-1">{data.exampleEnglish}</p>
+          {data.exampleTranslation && (
+            <p className="text-xs text-lingo-text-light mt-1">{data.exampleTranslation}</p>
           )}
         </div>
       )}

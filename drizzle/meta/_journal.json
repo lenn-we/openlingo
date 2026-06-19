@@ -36,6 +36,13 @@
       "when": 1772547473167,
       "tag": "0004_tidy_spencer_smythe",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1776120000000,
+      "tag": "0005_croatian_schema",
+      "breakpoints": true
     }
   ]
 }

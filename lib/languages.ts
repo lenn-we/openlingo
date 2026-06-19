@@ -1,4 +1,4 @@
-const displayNames = new Intl.DisplayNames(["en"], { type: "language" });
+const displayNames = new Intl.DisplayNames(["de"], { type: "language" });
 
 export function getLanguageName(code: string): string {
   return displayNames.of(code) ?? code;
@@ -36,6 +36,7 @@ const languageFlags: Record<string, string> = {
   ms: "\u{1F1F2}\u{1F1FE}", // 🇲🇾
   uk: "\u{1F1FA}\u{1F1E6}", // 🇺🇦
   bg: "\u{1F1E7}\u{1F1EC}", // 🇧🇬
+  hr: "\u{1F1ED}\u{1F1F7}", // 🇭🇷
 };
 
 export function getLanguageFlag(code: string): string {
@@ -56,4 +57,5 @@ export const supportedLanguages: Record<string, string> = {
   ko: "korean",
   zh: "mandarin",
   ja: "japanese-hiragana",
+  hr: "croatian",
 };

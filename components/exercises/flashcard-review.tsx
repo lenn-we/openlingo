@@ -8,10 +8,10 @@ import type { FlashcardReviewExercise } from "@/lib/content/types";
 import type { Quality } from "@/lib/srs";
 
 const QUALITY_BUTTONS: { label: string; quality: Quality; color: string }[] = [
-  { label: "Again", quality: 0, color: "bg-red-500 hover:bg-red-600" },
-  { label: "Hard", quality: 3, color: "bg-orange-500 hover:bg-orange-600" },
-  { label: "Good", quality: 4, color: "bg-lingo-blue hover:bg-lingo-blue/90" },
-  { label: "Easy", quality: 5, color: "bg-lingo-green hover:bg-lingo-green/90" },
+  { label: "Wiederholen", quality: 0, color: "bg-red-500 hover:bg-red-600" },
+  { label: "Schwer", quality: 3, color: "bg-orange-500 hover:bg-orange-600" },
+  { label: "Gut", quality: 4, color: "bg-lingo-blue hover:bg-lingo-blue/90" },
+  { label: "Leicht", quality: 5, color: "bg-lingo-green hover:bg-lingo-green/90" },
 ];
 
 export function FlashcardReview({
@@ -61,7 +61,7 @@ export function FlashcardReview({
 
         {!revealed && (
           <p className="text-sm text-lingo-text-light font-bold mt-2">
-            Tap to reveal
+            Tippen zum Aufdecken
           </p>
         )}
 

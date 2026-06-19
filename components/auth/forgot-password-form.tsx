@@ -49,16 +49,16 @@ export function ForgotPasswordForm() {
             />
           </svg>
         </div>
-        <h3 className="text-lg font-bold text-lingo-text">Check your email</h3>
+        <h3 className="text-lg font-bold text-lingo-text">E-Mail prüfen</h3>
         <p className="text-sm text-lingo-text-light">
-          If an account exists with <strong>{email}</strong>, you&apos;ll
-          receive a password reset link shortly.
+          Falls ein Account mit <strong>{email}</strong> existiert, erhältst du
+          in Kürze einen Link zum Zurücksetzen des Passworts.
         </p>
         <Link
           href="/sign-in"
           className="inline-block text-sm font-bold text-lingo-blue hover:underline"
         >
-          Back to Sign In
+          Zurück zur Anmeldung
         </Link>
       </div>
     );
@@ -67,14 +67,14 @@ export function ForgotPasswordForm() {
   return (
     <div className="space-y-4">
       <p className="text-sm text-lingo-text-light">
-        Enter your email address and we&apos;ll send you a link to reset your
-        password.
+        Gib deine E-Mail-Adresse ein und wir senden dir einen Link zum
+        Zurücksetzen deines Passworts.
       </p>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
-          label="Email"
+          label="E-Mail"
           type="email"
-          placeholder="you@example.com"
+          placeholder="deine@email.de"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -83,16 +83,16 @@ export function ForgotPasswordForm() {
           <p className="text-sm text-lingo-red font-medium">{error}</p>
         )}
         <Button type="submit" loading={loading} className="w-full">
-          Send Reset Link
+          Link senden
         </Button>
       </form>
       <p className="text-center text-sm text-lingo-text-light">
-        Remember your password?{" "}
+        Passwort gemerkt?{" "}
         <Link
           href="/sign-in"
           className="font-bold text-lingo-blue hover:underline"
         >
-          Sign In
+          Anmelden
         </Link>
       </p>
     </div>

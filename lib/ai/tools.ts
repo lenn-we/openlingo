@@ -278,12 +278,12 @@ export function createTools(userId: string, language?: string) {
         const words = await db
           .select({
             word: dictionaryWord.word,
-            translation: dictionaryWord.englishTranslation,
+            translation: dictionaryWord.translation,
             cefrLevel: dictionaryWord.cefrLevel,
             pos: dictionaryWord.pos,
             gender: dictionaryWord.gender,
             exampleNative: dictionaryWord.exampleSentenceNative,
-            exampleEnglish: dictionaryWord.exampleSentenceEnglish,
+            exampleTranslation: dictionaryWord.exampleSentenceTranslation,
           })
           .from(dictionaryWord)
           .where(and(...conditions))
@@ -313,7 +313,7 @@ export function createTools(userId: string, language?: string) {
                 pos: w.pos,
                 gender: w.gender,
                 exampleNative: w.exampleNative,
-                exampleEnglish: w.exampleEnglish,
+                exampleTranslation: w.exampleTranslation,
                 status: "new" as const,
                 nextReviewAt: null,
               })),

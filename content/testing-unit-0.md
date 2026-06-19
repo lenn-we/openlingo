@@ -1,10 +1,10 @@
 ---
 unitTitle: "Multiple Choice"
-description: "Test the multiple choice exercise type"
+description: "Testet den Multiple-Choice-Aufgabentyp"
 icon: "🔘"
 color: "#58CC02"
-targetLanguage: "de"
-sourceLanguage: "en"
+targetLanguage: "hr"
+sourceLanguage: "de"
 level: "B1"
 courseId: "32d59a82-257e-40e5-8fb9-61cb1d0d2cc3"
 ---

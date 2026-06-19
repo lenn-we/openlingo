@@ -5,7 +5,7 @@ export default function ResetPasswordPage() {
   return (
     <>
       <h2 className="mb-6 text-center text-2xl font-bold text-lingo-text">
-        Reset password
+        Passwort zurücksetzen
       </h2>
       <Suspense>
         <ResetPasswordForm />

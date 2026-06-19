@@ -2,6 +2,7 @@ import { createProviderRegistry } from "ai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
 import { createAnthropic } from "@ai-sdk/anthropic";
+import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 
 const google = createGoogleGenerativeAI({
   apiKey: process.env.GOOGLE_AI_API_KEY,
@@ -16,13 +17,29 @@ const anthropic = createAnthropic({
   apiKey: process.env.LLM_PROXY_API_KEY,
 });
 
-const registry = createProviderRegistry({ google, openai, anthropic });
+const deepseek = createOpenAICompatible({
+  name: "deepseek",
+  baseURL: "https://api.deepseek.com/v1",
+  apiKey: process.env.DEEPSEEK_API_KEY,
+  fetch: async (url, init) => {
+    if (init?.body) {
+      const body = JSON.parse(init.body as string);
+      body.thinking = { type: "enabled" };
+      body.reasoning_effort = "high";
+      init.body = JSON.stringify(body);
+    }
+    return fetch(url, init);
+  },
+});
+
+const registry = createProviderRegistry({ google, openai, anthropic, deepseek });
 
 export const AVAILABLE_MODELS: {
   id: string;
   label: string;
   provider: string;
 }[] = [
+  { id: "deepseek-v4-pro", label: "DeepSeek V4 Pro", provider: "deepseek" },
   { id: "gemini-3-flash-preview", label: "Gemini 3 Flash", provider: "google" },
   { id: "gemini-3-pro-preview", label: "Gemini 3 Pro", provider: "google" },
   {
@@ -42,7 +59,7 @@ export const AVAILABLE_MODELS: {
 
 /** Models available to regular (non-admin) users in the chat UI. */
 export const CHAT_AVAILABLE_MODELS = AVAILABLE_MODELS.filter(
-  (m) => m.id === "claude-sonnet-4-6",
+  (m) => m.id === "deepseek-v4-pro",
 );
 
 /** Comma-separated list of admin emails loaded from env. */

@@ -40,7 +40,7 @@ export function PromptEditor({ prompt }: { prompt: PromptWithOverride }) {
         </h2>
         {isCustomized && (
           <span className="text-xs font-bold text-lingo-blue bg-lingo-blue/10 px-2 py-0.5 rounded-full">
-            Customized
+            Angepasst
           </span>
         )}
       </div>
@@ -71,7 +71,7 @@ export function PromptEditor({ prompt }: { prompt: PromptWithOverride }) {
           disabled={saving}
           className="px-4 py-2 bg-lingo-blue text-white text-sm font-bold rounded-xl border-b-4 border-lingo-blue/70 active:border-b-0 active:mt-1 transition-all disabled:opacity-50"
         >
-          {saving ? "Saving..." : "Save"}
+          {saving ? "Speichern..." : "Speichern"}
         </button>
         {isCustomized && (
           <button
@@ -79,7 +79,7 @@ export function PromptEditor({ prompt }: { prompt: PromptWithOverride }) {
             disabled={resetting}
             className="px-4 py-2 text-sm font-bold text-lingo-text-light hover:text-lingo-text rounded-xl transition-colors disabled:opacity-50"
           >
-            {resetting ? "Resetting..." : "Reset to default"}
+            {resetting ? "Zurücksetzen..." : "Auf Standard zurücksetzen"}
           </button>
         )}
       </div>

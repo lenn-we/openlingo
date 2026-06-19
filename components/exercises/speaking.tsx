@@ -112,7 +112,7 @@ export function Speaking({ exercise, onResult, onContinue, language }: Props) {
           checkAnswerRef.current(correct);
           onResultRef.current(correct, transcribedText);
         } catch {
-          setError("Could not transcribe audio. Please try again.");
+          setError("Audio konnte nicht transkribiert werden. Bitte versuche es erneut.");
         } finally {
           setTranscribing(false);
         }
@@ -121,7 +121,7 @@ export function Speaking({ exercise, onResult, onContinue, language }: Props) {
       mediaRecorder.start();
       setRecording(true);
     } catch {
-      setError("Microphone access denied. Please allow microphone access and try again.");
+      setError("Mikrofonzugriff verweigert. Bitte erlaube den Mikrofonzugriff und versuche es erneut.");
     }
   }, [language, exercise.sentence]);
 
@@ -144,7 +144,7 @@ export function Speaking({ exercise, onResult, onContinue, language }: Props) {
       language={language}
     >
       <h2 className="text-xl font-bold text-lingo-text mb-6">
-        Speak this sentence
+            Sprich diesen Satz
       </h2>
 
       {status === "answering" && (
@@ -156,7 +156,7 @@ export function Speaking({ exercise, onResult, onContinue, language }: Props) {
             }}
             className="w-full rounded-xl border-2 border-lingo-blue bg-blue-50 px-4 py-2 text-sm font-bold text-lingo-blue hover:bg-blue-100 transition-all"
           >
-            Skip, I can&apos;t speak now
+            Überspringen, ich kann gerade nicht sprechen
           </button>
         </div>
       )}
@@ -218,13 +218,13 @@ export function Speaking({ exercise, onResult, onContinue, language }: Props) {
 
       {recording && (
         <p className="text-center text-sm text-lingo-text-light mb-4">
-          Recording... Tap the microphone to stop
+            Aufnahme läuft... Tippe auf das Mikrofon zum Stoppen
         </p>
       )}
 
       {!recording && !transcript && !transcribing && !error && (
         <p className="text-center text-sm text-lingo-text-light mb-4">
-          Tap the microphone and say the sentence
+            Tippe auf das Mikrofon und sprich den Satz
         </p>
       )}
 
@@ -236,7 +236,7 @@ export function Speaking({ exercise, onResult, onContinue, language }: Props) {
 
       {transcript && (
         <div className="text-center mb-4">
-          <p className="text-sm text-lingo-text-light">You said:</p>
+          <p className="text-sm text-lingo-text-light">            Du sagtest:</p>
           <p className="text-lg font-medium text-lingo-text">{transcript}</p>
         </div>
       )}

@@ -13,11 +13,11 @@ export default async function LandingPage() {
         {/* Header */}
         <h1 className="text-6xl font-black text-lingo-green mb-4">OpenLingo</h1>
         <p className="text-xl text-lingo-text-light mb-2">
-          Connecting LLMs to language learning
+          KI-gestütztes Sprachenlernen
         </p>
         <p className="text-base text-lingo-text-light mb-8">
-          Create personalised units, read/listen to translated articles and
-          practice with AI
+          Erstelle personalisierte Lektionen, lies und höre übersetzte Artikel und
+          übe mit KI
         </p>
 
         {/* CTA Buttons */}
@@ -27,7 +27,7 @@ export default async function LandingPage() {
               href={DEFAULT_PATH}
               className="inline-flex items-center justify-center rounded-2xl bg-lingo-green px-8 py-3 text-lg font-bold uppercase text-white border-b-4 border-lingo-green-dark hover:bg-lingo-green/90 transition-colors"
             >
-              Go to App
+              Zur App
             </Link>
           ) : (
             <>
@@ -35,13 +35,13 @@ export default async function LandingPage() {
                 href="/sign-up"
                 className="inline-flex items-center justify-center rounded-2xl bg-lingo-green px-8 py-3 text-lg font-bold uppercase text-white border-b-4 border-lingo-green-dark hover:bg-lingo-green/90 transition-colors"
               >
-                Get Started
+                Loslegen
               </Link>
               <Link
                 href="/sign-in"
                 className="inline-flex items-center justify-center rounded-2xl bg-white px-8 py-3 text-lg font-bold uppercase text-lingo-green border-2 border-lingo-border hover:bg-lingo-gray/30 transition-colors"
               >
-                I Already Have an Account
+                Ich habe bereits einen Account
               </Link>
             </>
           )}
@@ -93,7 +93,7 @@ export default async function LandingPage() {
         {/* Demo Video */}
         <div className="w-full">
           <h2 className="text-2xl font-bold text-lingo-text mb-4">
-            See it in action
+            In Aktion sehen
           </h2>
           <div className="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-lingo-border bg-black/5">
             <iframe
