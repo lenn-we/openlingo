@@ -1,3 +1,0 @@
-- You have a CLI tool called "agent-browser" that you can use for UI testing
-- When you login you can use the credentials testing@openlingo.dev. Password: see .env.local
-- If login doesn't work signup with email testing-${Date.now()}@openlingo.dev
